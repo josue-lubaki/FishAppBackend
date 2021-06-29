@@ -1,0 +1,36 @@
+{
+  "name": "fishapp",
+  "version": "1.0.0",
+  "description": "Backend of the Fish Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "./node_modules/.bin/netlify-lambda serve src",
+    "start2": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Josue Lubaki",
+  "license": "ISC",
+  "dependencies": {
+    "@ng-bootstrap/ng-bootstrap": "^9.1.3",
+    "@popperjs/core": "^2.9.2",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jquery": "^3.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb-client-encryption": "^1.2.5",
+    "mongoose": "^5.13.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "netlify-lambda": "^2.0.10",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.2",
+    "rxjs": "^7.1.0",
+    "serverless-http": "^2.7.0",
+    "serverless-lambda": "^1.0.1"
+  }
+}
