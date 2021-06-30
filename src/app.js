@@ -28,10 +28,6 @@ mongoose
         console.log('error database MongoDB : ' + error)
     })
 
-// app.listen(PORT, () => {
-//     console.log('Welcome : http://localhost:3000/api/v1/')
-// })
-
 // Routers
 const categoriesRoutes = require('./routes/categories.js')
 const productsRoutes = require('./routes/products')
@@ -44,5 +40,9 @@ app.use(`${api}/categories`, categoriesRoutes)
 app.use(`${api}/products`, productsRoutes)
 app.use(`${api}/users`, usersRoutes)
 app.use(`${api}/orders`, ordersRoutes)
+
+app.listen(PORT, () => {
+    console.log('Welcome : http://localhost:3000/api/v1/')
+})
 
 module.exports.handler = serverless(app)

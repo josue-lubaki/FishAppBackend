@@ -54,9 +54,10 @@ router.post(`/`, async (req, res) => {
         passwordHash: bcrypt.hashSync(req.body.password, 10),
         phone: req.body.phone,
         isAdmin: req.body.isAdmin,
-        street: req.body.street,
+        avenue: req.body.avenue,
         apartment: req.body.apartment,
-        zip: req.body.zip,
+        quartier: req.body.quartier,
+        commune: req.body.commune,
         city: req.body.city,
         country: req.body.country,
     })

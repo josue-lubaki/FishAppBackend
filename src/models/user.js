@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
     },
     passwordHash: {
         type: String,
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    street: {
+    avenue: {
         type: String,
         default: '',
     },
@@ -30,15 +29,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    zip: {
+    quartier: {
         type: String,
         default: '',
     },
-    city: {
-        type: String,
-        default: '',
-    },
-    country: {
+    commune: {
         type: String,
         default: '',
     },

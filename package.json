@@ -4,8 +4,8 @@
   "description": "Backend of the Fish Application",
   "main": "app.js",
   "scripts": {
-    "start": "./node_modules/.bin/netlify-lambda serve src",
-    "start2": "nodemon src/app.js",
+    "start": "nodemon src/app.js",
+    "start2": "/node_modules/.bin/netlify-lambda serve src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Josue Lubaki",

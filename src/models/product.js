@@ -23,10 +23,6 @@ const productSchema = mongoose.Schema({
             type: String,
         },
     ],
-    brand: {
-        type: String,
-        default: '',
-    },
     price: {
         type: Number,
         default: 0,
@@ -40,15 +36,7 @@ const productSchema = mongoose.Schema({
         type: Number,
         required: true,
         min: 0,
-        max: 255,
-    },
-    rating: {
-        type: Number,
-        default: 0,
-    },
-    numReviews: {
-        type: Number,
-        default: 0,
+        max: 500,
     },
     isFeatured: {
         type: Boolean,

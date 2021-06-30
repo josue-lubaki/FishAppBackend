@@ -89,10 +89,11 @@ router.post('/', async (req, res) => {
     // @return Order
     let order = new Order({
         orderItems: orderItemIds,
-        shippingAddress1: req.body.shippingAddress1,
-        shippingAddress2: req.body.shippingAddress2,
+        avenue: req.body.avenue,
+        apartment: req.body.apartment,
+        quartier: req.body.quartier,
+        commune: req.body.commune,
         city: req.body.city,
-        zip: req.body.zip,
         country: req.body.country,
         phone: req.body.phone,
         status: req.body.status,
