@@ -37,11 +37,11 @@ router.get(`/:id`, async (req, res) => {
         .catch((err) => console.log(err))
 
     if (!order) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
         })
     }
-    res.send(order)
+    return res.send(order)
 })
 
 /**
