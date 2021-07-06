@@ -32,5 +32,5 @@ app.use(`${api}/orders`, ordersRoutes)
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 
 app.listen(PORT, () => {
-    console.log('Welcome : \nhttp://localhost:3000/api/v1/')
+    console.log('Welcome : http://localhost:3000/api/v1/')
 })

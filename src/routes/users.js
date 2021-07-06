@@ -2,7 +2,6 @@ const { User } = require('../models/user')
 const express = require('express')
 const router = express.Router()
 const UserController = require('../controllers/UserController')
-const bcrypt = require('bcrypt')
 
 /**
  * Récupération de tous les Utilisateurs
