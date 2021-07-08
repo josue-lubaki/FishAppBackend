@@ -31,7 +31,7 @@
     "netlify-lambda": "^2.0.10",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.2",
-    "rxjs": "^7.1.0",
+    "rxjs": "^7.2.0",
     "serverless-http": "^2.7.0",
     "serverless-lambda": "^1.0.1"
   }
