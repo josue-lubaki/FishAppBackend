@@ -18,8 +18,11 @@ const reservationSchema = mongoose.Schema({
         required: true,
         default: 'Pending',
     },
-    Note: {
+    note: {
         type: String,
+    },
+    totalPrice: {
+        type: Number,
     },
     dateReservated: {
         type: Date,
