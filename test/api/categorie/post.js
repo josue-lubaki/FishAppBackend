@@ -4,6 +4,7 @@ const request = require('supertest')
 const app = require('../../../app')
 const database = require('../../../db/database')
 const api = process.env.API_URL
+const authJwt = require('../../../helpers/jwt')
 
 /**
  * Test Unitaire au moment de la creation d'une categorie
@@ -25,7 +26,7 @@ describe('POST /categories', () => {
 
     it('OK, creating a new Categorie works', (done) => {
         request(app)
-            .post(`${api}/categories/`)
+            .post(`${api}/categories/`, authJwt)
             .send({
                 name: 'Categorie test',
                 icon: 'icon test',
