@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const CategorieController = require('../controllers/CategorieController')
+const authJwt = require('../../helpers/jwt')
 
 /**
  * Récuperation des caterogies contenues dans la collection Categories

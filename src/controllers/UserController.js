@@ -134,8 +134,8 @@ module.exports = {
                 )
 
                 res.status(200).send({
-                    user: user.email,
-                    token: token,
+                    user_email: user.email,
+                    user_token: token,
                 })
             } else {
                 res.status(400).send('Password is wrong')

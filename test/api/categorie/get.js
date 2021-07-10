@@ -30,7 +30,7 @@ describe('GET /categories', () => {
             })
             .catch((err) => done(err))
     })
-
+    
     it('OK, getting categories has 1 categorie', (done) => {
         request(app)
             .post(`${api}/categories/`)
