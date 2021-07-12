@@ -230,7 +230,7 @@ module.exports = {
             )
 
             if (!reservationCount) {
-                res.status(500).json({
+                return res.status(500).json({
                     success: false,
                 })
             }

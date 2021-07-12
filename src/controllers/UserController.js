@@ -60,7 +60,7 @@ module.exports = {
             const userCount = await User.countDocuments((count) => count)
 
             if (!userCount) {
-                res.status(500).json({
+                return res.status(500).json({
                     success: false,
                 })
             }
@@ -134,8 +134,8 @@ module.exports = {
                 )
 
                 res.status(200).send({
-                    user_email: user.email,
-                    user_token: token,
+                    user: user.email,
+                    token: token,
                 })
             } else {
                 res.status(400).send('Password is wrong')

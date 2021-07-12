@@ -1,4 +1,5 @@
 const expressJwt = require('express-jwt')
+const tokenName = process.env.token
 
 function authJwt() {
     const secret = process.env.secret
@@ -15,7 +16,7 @@ function authJwt() {
         return expressJwt({
             secret,
             algorithms: ['HS256'],
-            isRevoked: verifyToken,
+            isRevoked: isRevoked,
         }).unless({
             path: [
                 { url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] },
@@ -24,7 +25,7 @@ function authJwt() {
                     url: /\/api\/v1\/categories(.*)/,
                     methods: ['GET', 'OPTIONS'],
                 },
-                { url: /\/api\/v1\/orders(.*)/, methods: ['POST', 'OPTIONS'] },
+                { url: /\/api\/v1\/orders(.*)/, methods: ['GET', 'OPTIONS'] },
                 `${api}/users/login`,
                 `${api}/users/register`,
             ],
@@ -33,20 +34,35 @@ function authJwt() {
 }
 
 /**
+ * Methode qui permet de bloquer les autres actions (POST, DELETE, UPDATE) pour les Utilisateurs ayant un token dont
+ * le champ "isAdmin" serait false. À présent, que les Utilisateurs étant admin:true peuvent (POST, DELETE, UPDATE)
+ * @param {*} req
+ * @param {*} payload  type de retour (ex: DATA)
+ * @param {*} done(callback, reject)
+ */
+async function isRevoked(req, payload, done) {
+    if (!payload.isAdmin) {
+        done(null, true)
+    }
+
+    done()
+}
+
+/**
  * Methode qui permet de bloquer toutes les routes sauf pour un user authentifié
  * @param {*} req
  * @param {*} res
  * @param {*} done
  */
-async function verifyToken(req, res, done) {
-    const bearerToken = req.headers['user_token']
-    if (typeof bearerToken !== 'undefined') {
-        req.token = bearerToken
-        done()
-    } else if (req.url.includes('orders')) {
-    }
+// async function verifyToken(req, res, done) {
+//     const bearerToken = req.headers[tokenName]
+//     if (typeof bearerToken !== 'undefined') {
+//         req.token = bearerToken
+//         done()
+//     } else if (req.url.includes('orders')) {
+//     }
 
-    done(null, true)
-}
+//     done(null, true)
+// }
 
 module.exports = authJwt
