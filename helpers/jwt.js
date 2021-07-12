@@ -8,7 +8,7 @@ function authJwt() {
         return expressJwt({
             secret,
             algorithms: ['HS256'],
-            isRevoked: verifyToken,
+            isRevoked: isRevoked,
         }).unless({
             path: [{ url: /(.*)/ }],
         })
@@ -43,26 +43,10 @@ function authJwt() {
 async function isRevoked(req, payload, done) {
     if (!payload.isAdmin) {
         done(null, true)
+    } else if (req.url.includes('orders')) {
     }
 
     done()
 }
-
-/**
- * Methode qui permet de bloquer toutes les routes sauf pour un user authentifié
- * @param {*} req
- * @param {*} res
- * @param {*} done
- */
-// async function verifyToken(req, res, done) {
-//     const bearerToken = req.headers[tokenName]
-//     if (typeof bearerToken !== 'undefined') {
-//         req.token = bearerToken
-//         done()
-//     } else if (req.url.includes('orders')) {
-//     }
-
-//     done(null, true)
-// }
 
 module.exports = authJwt

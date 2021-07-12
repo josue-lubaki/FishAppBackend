@@ -25,7 +25,7 @@ module.exports = {
             }
             return res.send(productList)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while getting All Products : ${error}`)
         }
     },
 
@@ -47,7 +47,7 @@ module.exports = {
             }
             res.send(product)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while getting product by Id : ${error}`)
         }
     },
 
@@ -96,7 +96,7 @@ module.exports = {
 
             res.send(product)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while creating a product : ${error}`)
         }
     },
 
@@ -162,7 +162,7 @@ module.exports = {
 
             res.send(updatedProduct)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while updating product by Id : ${error}`)
         }
     },
 
@@ -194,7 +194,7 @@ module.exports = {
                     })
                 })
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while deleting a product by ID : ${error}`)
         }
     },
 
@@ -216,7 +216,9 @@ module.exports = {
                 productCount: productCount,
             })
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(
+                `Error while getting Toatal Count of Product : ${error}`
+            )
         }
     },
 
@@ -242,7 +244,7 @@ module.exports = {
             }
             res.send(products)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while getting All Featured product : ${error}`)
         }
     },
 
@@ -285,7 +287,7 @@ module.exports = {
 
             res.send(product)
         } catch (error) {
-            throw Error(`Error while getting All Users : ${error}`)
+            throw Error(`Error while updating Images product by Id : ${error}`)
         }
     },
 }

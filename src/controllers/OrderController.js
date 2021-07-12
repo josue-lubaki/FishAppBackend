@@ -173,19 +173,32 @@ module.exports = {
      * @see http://localhost:3000/api/v1/orders/get/totalsales
      */
     async getTotalSales(req, res) {
-        const totalSales = await Order.aggregate([
-            { $group: { _id: null, totalSales: { $sum: `$totalPrice` } } },
-        ]).catch(
-            (err = (err) => {
-                console.error(err)
-            })
-        )
+        try {
+            const totalSales = await Order.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalSales: { $sum: `$totalPrice` },
+                    },
+                },
+            ]).catch(
+                (err = (err) => {
+                    console.error(`Error while try Order.aggregate : ${err}`)
+                })
+            )
 
-        if (!totalSales) {
-            return res.status(400).send('The order sales cannot be generated')
+            if (!totalSales) {
+                return res
+                    .status(400)
+                    .send('The order sales cannot be generated')
+            }
+
+            res.send({ totalSales: totalSales.pop().totalSales })
+        } catch (error) {
+            throw new Error(
+                `Error while getting Total Sales of Orders : ${error}`
+            )
         }
-
-        res.send({ totalSales: totalSales.pop().totalSales })
     },
 
     /**
@@ -194,21 +207,27 @@ module.exports = {
      * @see http://localhost:3000/api/v1/orders/get/count
      */
     async getCountOrders(req, res) {
-        const orderCount = await Order.countDocuments((count) => count)
+        try {
+            const orderCount = await Order.countDocuments((count) => count)
 
-        if (orderCount === 0) {
-            return res.status(200).json({
-                orderCount: 0,
+            if (orderCount === 0) {
+                return res.status(200).json({
+                    orderCount: 0,
+                })
+            } else if (!orderCount) {
+                return res.status(500).json({
+                    success: false,
+                })
+            }
+
+            return res.send({
+                orderCount: orderCount,
             })
-        } else if (!orderCount) {
-            return res.status(500).json({
-                success: false,
-            })
+        } catch (error) {
+            throw new Error(
+                `Error while getting Total Count of Orders : ${error}`
+            )
         }
-
-        return res.send({
-            orderCount: orderCount,
-        })
     },
 
     /**
@@ -216,22 +235,28 @@ module.exports = {
      * @see http://localhost:3000/api/v1/orders/get/userorder/[:userid]
      */
     async getOrderUserById(req, res) {
-        if (!mongoose.isValidObjectId(req.params.userid)) {
-            return res.status(400).send('Invalid user Id')
-        }
+        try {
+            if (!mongoose.isValidObjectId(req.params.userid)) {
+                return res.status(400).send('Invalid user Id')
+            }
 
-        const userOrderList = await Order.find({ user: req.params.userid })
-            .populate({
-                path: 'orderItems',
-                populate: { path: 'product', populate: 'category' },
+            const userOrderList = await Order.find({
+                user: req.params.userid,
             })
-            .sort({ dateOrdered: -1 })
+                .populate({
+                    path: 'orderItems',
+                    populate: { path: 'product', populate: 'category' },
+                })
+                .sort({ dateOrdered: -1 })
 
-        if (!userOrderList) {
-            return res.status(500).json({
-                success: false,
-            })
+            if (!userOrderList) {
+                return res.status(500).json({
+                    success: false,
+                })
+            }
+            res.send(userOrderList)
+        } catch (error) {
+            throw new Error(`Error while try getting an order by Id : ${error}`)
         }
-        res.send(userOrderList)
     },
 }

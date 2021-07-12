@@ -69,7 +69,7 @@ module.exports = {
 
             res.send(category)
         } catch (error) {
-            throw new Error(`Error while getting All Users : ${error}`)
+            throw new Error(`Error while creating a category : ${error}`)
         }
     },
 
@@ -101,7 +101,7 @@ module.exports = {
                     })
                 })
         } catch (error) {
-            throw new Error(`Error while getting All Users : ${error}`)
+            throw new Error(`Error while deleting a category : ${error}`)
         }
     },
 
@@ -132,7 +132,7 @@ module.exports = {
 
             res.send(category)
         } catch (error) {
-            throw new Error(`Error while getting All Users : ${error}`)
+            throw new Error(`Error while updating a category : ${error}`)
         }
     },
 }
