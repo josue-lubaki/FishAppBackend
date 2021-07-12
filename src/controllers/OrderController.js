@@ -175,17 +175,16 @@ module.exports = {
     async getTotalSales(req, res) {
         const totalSales = await Order.aggregate([
             { $group: { _id: null, totalSales: { $sum: `$totalPrice` } } },
-        ]).catch((err) => console.log(err))
+        ]).catch(
+            (err = (err) => {
+                console.error(err)
+            })
+        )
 
         if (!totalSales) {
             return res.status(400).send('The order sales cannot be generated')
         }
 
-        if (!totalSales.pop()) {
-            return res
-                .status(400)
-                .json({ message: 'Aucune commande à calculer' })
-        }
         res.send({ totalSales: totalSales.pop().totalSales })
     },
 
@@ -197,11 +196,16 @@ module.exports = {
     async getCountOrders(req, res) {
         const orderCount = await Order.countDocuments((count) => count)
 
-        if (!orderCount) {
+        if (orderCount === 0) {
+            return res.status(200).json({
+                orderCount: 0,
+            })
+        } else if (!orderCount) {
             return res.status(500).json({
                 success: false,
             })
         }
+
         return res.send({
             orderCount: orderCount,
         })
