@@ -208,7 +208,7 @@ module.exports = {
             const productCount = await Product.countDocuments((count) => count)
 
             if (!productCount) {
-                res.status(500).json({
+                return res.status(500).json({
                     success: false,
                 })
             }
@@ -236,7 +236,7 @@ module.exports = {
             )
 
             if (!products) {
-                res.status(500).json({
+                return res.status(500).json({
                     success: false,
                 })
             }
