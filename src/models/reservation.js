@@ -28,6 +28,30 @@ const reservationSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    avenue: {
+        type: String,
+        default: '',
+    },
+    apartment: {
+        type: String,
+        default: '',
+    },
+    quartier: {
+        type: String,
+        default: '',
+    },
+    commune: {
+        type: String,
+        default: '',
+    },
+    city: {
+        type: String,
+        default: 'Kinshasa',
+    },
+    country: {
+        type: String,
+        default: 'RDC',
+    },
 })
 
 reservationSchema.virtual('id').get(function () {
