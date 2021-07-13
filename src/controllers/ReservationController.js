@@ -130,6 +130,12 @@ module.exports = {
                 note: req.body.note,
                 totalPrice: totalPrice,
                 dateReservated: req.body.dateReservated,
+                avenue: req.body.avenue,
+                quartier: req.body.quartier,
+                commune: req.body.commune,
+                apartment: req.body.apartment,
+                city: req.body.city,
+                country: req.body.country,
             })
 
             reservation = await reservation.save()
