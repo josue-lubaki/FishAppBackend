@@ -193,6 +193,10 @@ module.exports = {
                     .send('The order sales cannot be generated')
             }
 
+            if (totalSales && totalSales.length === 0) {
+                return res.status(200).json({ totalSales: 0 })
+            }
+
             res.send({ totalSales: totalSales.pop().totalSales })
         } catch (error) {
             throw new Error(

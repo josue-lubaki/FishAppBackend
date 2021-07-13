@@ -46,4 +46,11 @@ router.delete(`/:id`, ReservationController.deleteReservationById)
  */
 router.get('/get/count', ReservationController.getCountAllReservation)
 
+/**
+ * connaître la somme totale des Commandes Reservées
+ * @method aggregate ({$group: {_id:null, name : { $fonctionAggregate : 'nameFieldModel' } } })
+ * @see http://localhost:3000/api/v1/orders/get/totalreserved
+ */
+router.get('/get/totalreserved', ReservationController.getTotalReserved)
+
 module.exports = router

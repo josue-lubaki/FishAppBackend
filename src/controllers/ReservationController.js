@@ -229,16 +229,65 @@ module.exports = {
                 (count) => count
             )
 
-            if (!reservationCount) {
+            if (reservationCount === 0) {
+                return res.status(200).json({
+                    reservationCount: 0,
+                })
+            } else if (!reservationCount) {
                 return res.status(500).json({
                     success: false,
+                    message: 'Problème lors de la generation',
                 })
             }
+
             res.send({
                 reservationCount: reservationCount,
             })
         } catch (error) {
             throw Error(`Error while getting count reservation : ${error}`)
+        }
+    },
+
+    /**
+     * connaître la somme totale des Commandes Reservées
+     * @method aggregate ({$group: {_id:null, name : { $fonctionAggregate : 'nameFieldModel' } } })
+     * @see http://localhost:3000/api/v1/orders/get/totalreserved
+     */
+    async getTotalReserved(req, res) {
+        try {
+            const totalReserved = await Reservation.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalReserved: { $sum: `$totalPrice` },
+                    },
+                },
+            ]).catch(
+                (err = (err) => {
+                    console.error(
+                        `Error while try Reservation.aggregate : ${err}`
+                    )
+                })
+            )
+
+            if (!totalReserved) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'The reservation sales cannot be generated',
+                })
+            }
+
+            if (totalReserved && totalReserved.length === 0) {
+                return res.status(200).json({
+                    totalReserved: 0,
+                })
+            }
+
+            res.send({ totalReserved: totalReserved.pop().totalReserved })
+        } catch (error) {
+            throw new Error(
+                `Error while getting Total Reserved of Reservation : ${error}`
+            )
         }
     },
 }
