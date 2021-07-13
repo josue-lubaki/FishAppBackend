@@ -207,11 +207,16 @@ module.exports = {
         try {
             const productCount = await Product.countDocuments((count) => count)
 
-            if (!productCount) {
+            if (productCount === 0) {
+                return res.status(200).json({
+                    productCount: 0,
+                })
+            } else if (!productCount) {
                 return res.status(500).json({
                     success: false,
                 })
             }
+
             res.send({
                 productCount: productCount,
             })

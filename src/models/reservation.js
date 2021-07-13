@@ -16,7 +16,7 @@ const reservationSchema = mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: 'Pending',
+        default: '1',
     },
     note: {
         type: String,
