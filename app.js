@@ -32,6 +32,7 @@ const productsRoutes = require('./src/routes/products')
 const usersRoutes = require('./src/routes/users')
 const ordersRoutes = require('./src/routes/orders')
 const reservationRoutes = require('./src/routes/reservation')
+const bannersRoutes = require('./src/routes/bannersRoutes')
 const api = process.env.API_URL
 
 app.use(`${api}/categories`, categoriesRoutes)
@@ -39,6 +40,7 @@ app.use(`${api}/products`, productsRoutes)
 app.use(`${api}/users`, usersRoutes)
 app.use(`${api}/orders`, ordersRoutes)
 app.use(`${api}/reservations`, reservationRoutes)
+app.use(`${api}/banners`, bannersRoutes)
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 
 module.exports = app
