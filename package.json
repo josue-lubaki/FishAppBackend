@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Backend of the Fish Application",
   "main": "app.js",
+  "engines": {
+    "node": "14.17.0"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
     "dev":"cross-env NODE_ENV=development nodemon app",
