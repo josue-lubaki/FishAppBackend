@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
-    "@popperjs/core": "^2.9.2",
+    "@popperjs/core": "^2.9.3",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.0.2",
