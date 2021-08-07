@@ -58,4 +58,12 @@ router.get('/get/count', UserController.getCountUser)
  */
 router.delete(`/:id`, UserController.deleteUserById)
 
+/**
+ * Methode qui permet de savoir si l'Utilisateur existe
+ * @param id identifiant de l'utilisateur à Vérifier
+ * @see http://localhost:3000/api/v1/users/exist/:id
+ * @return boolean
+ */
+router.get(`/exist/:id`, UserController.existUser)
+
 module.exports = router
