@@ -280,4 +280,28 @@ module.exports = {
             throw Error(`Error while deleting an user : ${error}`)
         }
     },
+
+    async existUser(req, res) {
+        try {
+            const user = await User.findById(req.params.id).catch((err) =>
+                console.log(err)
+            )
+
+            if (!user) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'The user with the given ID was not found',
+                })
+            } else {
+                return res.status(200).send({
+                    success: true,
+                    message: 'User exist',
+                })
+            }
+        } catch (error) {
+            throw Error(
+                `Error while getting Information a User by ID : ${error}`
+            )
+        }
+    },
 }
