@@ -33,7 +33,7 @@ module.exports = {
     async getUserById(req, res) {
         try {
             const user = await User.findById(req.params.id)
-                .select('-passwordHash')
+                .select(['-passwordHash', '-isAdmin'])
                 .catch((err) => console.log(err))
 
             if (!user) {
@@ -92,6 +92,8 @@ module.exports = {
                 commune: req.body.commune,
                 city: req.body.city,
                 country: req.body.country,
+                question: req.body.question,
+                reponse: req.body.reponse,
             })
 
             user = await user.save()
@@ -134,7 +136,8 @@ module.exports = {
                 )
 
                 res.status(200).send({
-                    user: user.email,
+                    id: user.id,
+                    email: user.email,
                     token: token,
                 })
             } else {
@@ -164,13 +167,15 @@ module.exports = {
                 commune: req.body.commune,
                 city: req.body.city,
                 country: req.body.country,
+                question: req.body.question,
+                reponse: req.body.reponse,
             })
 
             // Vérifier si l'Utilisateur existe déjà
             const existUser = await User.findOne({ email: req.body.email })
 
             if (!existUser) {
-                user = user.save()
+                user = await user.save()
 
                 if (!user) {
                     return res.status(400).send('The user cannot be created')
@@ -184,7 +189,9 @@ module.exports = {
                     process.env.secret,
                     (err, token) => {
                         return res.json({
-                            user: req.body.email,
+                            id: user.id,
+                            name: req.body.name,
+                            email: req.body.email,
                             token: token,
                         })
                     }
@@ -232,11 +239,14 @@ module.exports = {
                     passwordHash: newPasswordHash,
                     phone: req.body.phone,
                     isAdmin: req.body.isAdmin,
-                    street: req.body.street,
+                    avenue: req.body.avenue,
                     apartment: req.body.apartment,
-                    zip: req.body.zip,
+                    quartier: req.body.quartier,
+                    commune: req.body.commune,
                     city: req.body.city,
                     country: req.body.country,
+                    question: req.body.question,
+                    reponse: req.body.reponse,
                 },
                 { new: true }
             )
@@ -281,6 +291,12 @@ module.exports = {
         }
     },
 
+    /**
+     * Methode qui permet de vérifier si l'Utilisateur existe dans la collection grâce à son ID
+     * @param {*} req
+     * @param {*} res
+     * @returns boolean
+     */
     async existUser(req, res) {
         try {
             const user = await User.findById(req.params.id).catch((err) =>
@@ -302,6 +318,71 @@ module.exports = {
             throw Error(
                 `Error while getting Information a User by ID : ${error}`
             )
+        }
+    },
+    async getQuestion(req, res) {
+        // Demander à l'utilisateur son email, phone
+        const user = await User.findOne({
+            email: req.body.email,
+            phone: req.body.phone,
+        })
+        console.log('User Trouvé', user)
+
+        // Récupérer sa question de securité
+        if (user) {
+            if (user.question) {
+                res.status(200).send({
+                    id: user.id,
+                    question: user.question,
+                })
+            } else {
+                res.status(404).send({
+                    message: "Vous n'avez pas de question de sécurité",
+                })
+            }
+        } else {
+            res.status(200).send({
+                message: 'Compte non trouvé',
+            })
+        }
+    },
+
+    async verifyResponse(req, res) {
+        // Demander à l'utilisateur sa reponse
+        const user = await User.findById(req.params.id).catch((err) =>
+            console.log('User no found : ', err)
+        )
+
+        const reponseBD = user.reponse.toLowerCase()
+        const reponseUser = req.body.reponse.toLowerCase()
+
+        if (reponseUser === reponseBD) {
+            res.status(200).send({
+                id: user.id,
+                message: 'Vous pouvez entrer un nouveau mot de passe',
+                success: true,
+            })
+        } else {
+            res.status(201).send({
+                message: 'Désolé, la reponse est incorrecte',
+                success: false,
+            })
+        }
+    },
+
+    async resetPassword(req, res) {
+        const user = await User.findByIdAndUpdate(req.params.id, {
+            passwordHash: bcrypt.hashSync(req.body.password, 10),
+        })
+
+        if (user) {
+            res.status(201).send({
+                message: `nouveau mot de passe '${req.body.password}'`,
+            })
+        } else {
+            res.status(200).send({
+                message: 'Sorry, User no found',
+            })
         }
     },
 }

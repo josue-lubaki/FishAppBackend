@@ -66,4 +66,28 @@ router.delete(`/:id`, UserController.deleteUserById)
  */
 router.get(`/exist/:id`, UserController.existUser)
 
+/**
+ * Methode qui permet à l'Utilisateur d'entrer les informations Utiles
+ * pour la récupéation de son compte
+ * @see http://localhost:3000/api/v1/users/compte/forgot/get/question
+ * @champs {email, phone}
+ */
+router.get(`/compte/forgot/get/question`, UserController.getQuestion)
+
+/**
+ * Methode qui permet à l'utilisateur d'entrer sa réponse de sécurité
+ * @see http://localhost:3000/api/v1/users/compte/forgot/get/response/:id
+ * @param id : identifiant de l'Utilisateur dont on veut vérifier la réponse
+ * @champs {reponse}
+ */
+router.post(`/compte/forgot/get/response/:id`, UserController.verifyResponse)
+
+/**
+ * Après vérification, methode qui perme de changer le mot de passe de l'utilisateur
+ * @see http://localhost:3000/api/v1/users/compte/forgot/reset/:id
+ * @param id : identifiant de l'utilisateur dont on veut reset le mot de passe
+ * @champs {password}
+ */
+router.patch(`/compte/forgot/reset/:id`, UserController.resetPassword)
+
 module.exports = router

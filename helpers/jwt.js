@@ -25,14 +25,29 @@ function authJwt() {
                     url: /\/api\/v1\/categories(.*)/,
                     methods: ['GET', 'OPTIONS'],
                 },
-                { url: /\/api\/v1\/orders(.*)/, methods: ['POST', 'OPTIONS'] },
                 {
-                    url: /\/api\/v1\/rerservations(.*)/,
+                    url: /\/api\/v1\/orders\/get\/userorder\/(.*)/,
+                    methods: ['GET', 'OPTIONS'],
+                },
+                {
+                    url: /\/api\/v1\/reservations(.*)/,
                     methods: ['GET', 'OPTIONS'],
                 },
                 { url: /\/api\/v1\/banners(.*)/, methods: ['GET', 'OPTIONS'] },
+                { url: /\/api\/v1\/users(.*)/, methods: ['GET', 'OPTIONS'] },
                 `${api}/users/login`,
                 `${api}/users/register`,
+                {
+                    url: /\/api\/v1\/orders(.*)/,
+                    methods: ['GET', 'OPTIONS'],
+                },
+                {
+                    url: /\/api\/v1\/orders(.*)/,
+                    methods: ['POST', 'OPTIONS'],
+                },
+                // {
+                //     url: /\/api\/v1\/users\/compte\/forgot\/(.*)/,
+                // },
             ],
         })
     }
@@ -46,6 +61,7 @@ function authJwt() {
  * @param {*} done(callback, reject)
  */
 async function isRevoked(req, payload, done) {
+    console.log('Request ', req)
     if (!payload.isAdmin) {
         done(null, true)
     } else if (req.url.includes('orders')) {
