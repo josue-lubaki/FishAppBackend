@@ -45,6 +45,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'RDC',
     },
+    question: {
+        type: String,
+    },
+    reponse: {
+        type: String,
+    },
 })
 
 userSchema.virtual('id').get(function () {

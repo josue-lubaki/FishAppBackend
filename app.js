@@ -19,12 +19,6 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 3000
 /**************************************** */
 
-// all executed methods log output to console
-mongoose.set('debug', true)
-
-// get mongodb-shell friendly output (ISODate)
-mongoose.set('debug', { shell: true })
-
 // connexion de la base des données
 database.connexionDB().then(() => {
     app.listen(PORT, () => {
