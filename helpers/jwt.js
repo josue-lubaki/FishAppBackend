@@ -30,6 +30,14 @@ function authJwt() {
                     methods: ['GET', 'OPTIONS'],
                 },
                 {
+                    url: /\/api\/v1\/reservations\/get\/user\/(.*)/,
+                    methods: ['GET', 'OPTIONS'],
+                },
+                {
+                    url: /\/api\/v1\/reservations(.*)/,
+                    methods: ['POST', 'OPTIONS'],
+                },
+                {
                     url: /\/api\/v1\/reservations(.*)/,
                     methods: ['GET', 'OPTIONS'],
                 },

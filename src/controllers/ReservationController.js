@@ -141,7 +141,7 @@ module.exports = {
             reservation = await reservation.save()
 
             if (!reservation) {
-                return res.status(500).send('The Reservation cannot be craeted')
+                return res.status(500).send('The Reservation cannot be created')
             }
 
             res.send(reservation)
@@ -257,7 +257,7 @@ module.exports = {
     /**
      * connaître la somme totale des Commandes Reservées
      * @method aggregate ({$group: {_id:null, name : { $fonctionAggregate : 'nameFieldModel' } } })
-     * @see http://localhost:3000/api/v1/orders/get/totalreserved
+     * @see http://localhost:3000/api/v1/reservations/get/totalreserved
      */
     async getTotalReserved(req, res) {
         try {
@@ -293,6 +293,37 @@ module.exports = {
         } catch (error) {
             throw new Error(
                 `Error while getting Total Reserved of Reservation : ${error}`
+            )
+        }
+    },
+    /**
+     * Récupération du detail d'une commande d'un utilisation via son ID
+     * @see http://localhost:3000/api/v1/reservations/get/user/[:userid]
+     */
+    async getReservationsUserById(req, res) {
+        try {
+            if (!mongoose.isValidObjectId(req.params.userid)) {
+                return res.status(400).send('Invalid user Id')
+            }
+
+            const userReservationList = await Reservation.find({
+                user: req.params.userid,
+            })
+                .populate({
+                    path: 'orderItems',
+                    populate: { path: 'product', populate: 'category' },
+                })
+                .sort({ dateReservated: -1 })
+
+            if (!userReservationList) {
+                return res.status(500).json({
+                    success: false,
+                })
+            }
+            res.send(userReservationList)
+        } catch (error) {
+            throw new Error(
+                `Error while try getting an reservation by Id : ${error}`
             )
         }
     },
