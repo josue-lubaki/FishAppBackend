@@ -53,4 +53,10 @@ router.get('/get/count', ReservationController.getCountAllReservation)
  */
 router.get('/get/totalreserved', ReservationController.getTotalReserved)
 
+/**
+ * Récupération de la liste des reservations d'un utilisation via son ID
+ * @see http://localhost:3000/api/v1/reservations/get/user/[:userid]
+ */
+router.get(`/get/user/:userid`, ReservationController.getReservationsUserById)
+
 module.exports = router
