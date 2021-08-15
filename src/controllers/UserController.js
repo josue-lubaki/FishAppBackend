@@ -49,6 +49,19 @@ module.exports = {
             )
         }
     },
+    async getUserByIdMethode(idUser) {
+        try {
+            const user = await User.findById(idUser)
+                .select(['-passwordHash', '-isAdmin'])
+                .catch((err) => console.log(err))
+
+            return user
+        } catch (error) {
+            throw Error(
+                `Error while getting Information a User by ID Method : ${error}`
+            )
+        }
+    },
 
     /**
      * Methode qui permet de calculer le nombre des Utilisateurs dans la collections Users
@@ -138,6 +151,7 @@ module.exports = {
                 res.status(200).send({
                     id: user.id,
                     email: user.email,
+                    name: user.name,
                     token: token,
                 })
             } else {
@@ -299,6 +313,13 @@ module.exports = {
      */
     async existUser(req, res) {
         try {
+            if (req.params.id == 0) {
+                return res.status(304).json({
+                    success: false,
+                    message: 'The user with the given ID was not found',
+                })
+            }
+
             const user = await User.findById(req.params.id).catch((err) =>
                 console.log(err)
             )

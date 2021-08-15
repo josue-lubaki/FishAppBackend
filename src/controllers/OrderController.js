@@ -1,6 +1,10 @@
 const { Order } = require('../models/order')
 const { OrderItem } = require('../models/order-item')
 const mongoose = require('mongoose')
+const nodemailer = require('../../helpers/nodemailer')
+const ControllerUser = require('./UserController')
+
+let username
 
 module.exports = {
     /**
@@ -106,6 +110,29 @@ module.exports = {
         }
 
         res.send(order)
+
+        ControllerUser.getUserByIdMethode(req.body.user).then((result) => {
+            const options = {
+                from: 'josuelubaki30@gmail.com',
+                to: `${result.email}`,
+                subject: 'Sending email with node.js',
+                html: `Merci Beaucoup pour votre confiance en notre équipe.
+                <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>Voici le lien vers le detail de la commande :
+                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br><br>Dès que votre commande sera traitée, nous vous enverrons une autre mail.
+                <br>Merci, bonne journée`,
+            }
+
+            console.log('Voici result user email : ' + result.user)
+
+            nodemailer.sendMail(options, function (err, res) {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+
+                console.log('sent : ' + res.response)
+            })
+        })
     },
 
     /**
