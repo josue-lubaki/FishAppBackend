@@ -3,8 +3,7 @@ const { OrderItem } = require('../models/order-item')
 const mongoose = require('mongoose')
 const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
-
-let username
+require('dotenv').config()
 
 module.exports = {
     /**
@@ -114,7 +113,7 @@ module.exports = {
         await ControllerUser.getUserByIdMethode(req.body.user).then(
             async (result) => {
                 const options = {
-                    from: 'josuelubaki30@gmail.com',
+                    from: process.env.userEmail,
                     to: `${result.email}`,
                     subject: 'Sending email with node.js',
                     html: `Merci Beaucoup pour votre confiance en notre équipe.
