@@ -56,6 +56,9 @@ function authJwt() {
                 // {
                 //     url: /\/api\/v1\/users\/compte\/forgot\/(.*)/,
                 // },
+                {
+                    url: /\/api\/v1\/users\/exist\/(.*)/,
+                },
             ],
         })
     }

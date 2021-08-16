@@ -314,7 +314,7 @@ module.exports = {
     async existUser(req, res) {
         try {
             if (req.params.id == 0) {
-                return res.status(304).json({
+                return res.status(200).json({
                     success: false,
                     message: 'The user with the given ID was not found',
                 })
@@ -325,7 +325,7 @@ module.exports = {
             )
 
             if (!user) {
-                return res.status(500).json({
+                return res.status(200).json({
                     success: false,
                     message: 'The user with the given ID was not found',
                 })

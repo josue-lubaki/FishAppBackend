@@ -111,28 +111,30 @@ module.exports = {
 
         res.send(order)
 
-        ControllerUser.getUserByIdMethode(req.body.user).then((result) => {
-            const options = {
-                from: 'josuelubaki30@gmail.com',
-                to: `${result.email}`,
-                subject: 'Sending email with node.js',
-                html: `Merci Beaucoup pour votre confiance en notre équipe.
+        await ControllerUser.getUserByIdMethode(req.body.user).then(
+            async (result) => {
+                const options = {
+                    from: 'josuelubaki30@gmail.com',
+                    to: `${result.email}`,
+                    subject: 'Sending email with node.js',
+                    html: `Merci Beaucoup pour votre confiance en notre équipe.
                 <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>Voici le lien vers le detail de la commande :
                 https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br><br>Dès que votre commande sera traitée, nous vous enverrons une autre mail.
                 <br>Merci, bonne journée`,
-            }
-
-            console.log('Voici result user email : ' + result.user)
-
-            nodemailer.sendMail(options, function (err, res) {
-                if (err) {
-                    console.error(err)
-                    return
                 }
 
-                console.log('sent : ' + res.response)
-            })
-        })
+                await nodemailer.sendMail(options, function (err, res) {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+
+                    console.log('sent : ' + res.response)
+                })
+
+                console.log('email to : ', result.email)
+            }
+        )
     },
 
     /**
