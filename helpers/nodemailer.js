@@ -1,10 +1,18 @@
 const nodemailer = require('nodemailer')
+const xoauth2 = require('xoauth2')
+require('dotenv').config()
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'josuelubaki30@gmail.com',
-        pass: 'Heroesdemarvel',
+        type: 'OAuth2',
+        user: process.env.userEmail,
+        pass: process.env.password,
+        clientId: process.env.clientId,
+        clientSecret: process.env.clientSecret,
+        refreshToken: process.env.refreshToken,
     },
 })
 
