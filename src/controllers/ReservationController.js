@@ -2,6 +2,8 @@ const { Reservation } = require('../models/reservation')
 const { OrderItem } = require('../models/order-item')
 const { User } = require('../models/user')
 const mongoose = require('mongoose')
+const nodemailer = require('../../helpers/nodemailer')
+const ControllerUser = require('./UserController')
 
 module.exports = {
     /**
@@ -124,7 +126,7 @@ module.exports = {
             const totalPrice = totalPrices.reduce((a, b) => a + b, 0)
 
             let reservation = new Reservation({
-                user: req.body.user,
+                user: req.body.user, // ID user
                 orderItems: orderItemIds,
                 status: req.body.status,
                 note: req.body.note,
@@ -145,6 +147,41 @@ module.exports = {
             }
 
             res.send(reservation)
+
+            // Send message to customer
+            await ControllerUser.getUserByIdMethode(req.body.user).then(
+                async (result) => {
+                    const options = {
+                        from: process.env.userEmail,
+                        to: `${result.email}`,
+                        subject: 'Confirmation Reservation',
+                        html: `Merci Beaucoup pour votre confiance en notre équipe.
+                <br>Votre Réservation fait un montant de <b>${totalPrice} USD</b>.<br>
+                Voici le lien vers le detail de la Réservation :
+                https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id} <br>
+                Dès que votre Réservation sera traitée, nous vous enverrons un autre mail.
+                <br><br>
+                
+                Thank you very much for your trust in our team.
+                <br>Your reservation is worth <b>${totalPrice} USD</b>.<br>
+                Here is the link to the detail of the reservation:
+                https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}<br>
+                As soon as your reservation is processed, we will send you another email.
+                <br>Thanks, have a good day`,
+                    }
+
+                    await nodemailer.sendMail(options, function (err, res) {
+                        if (err) {
+                            console.error(err)
+                            return
+                        }
+
+                        console.log('sent : ' + res.response)
+                    })
+
+                    console.log('email to : ', result.email)
+                }
+            )
         } catch (error) {
             throw Error(`Error while create reservation : ${error}`)
         }

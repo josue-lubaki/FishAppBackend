@@ -99,7 +99,7 @@ module.exports = {
             phone: req.body.phone,
             status: req.body.status,
             totalPrice: totalPrice,
-            user: req.body.user,
+            user: req.body.user, // ID user
         })
 
         order = await order.save()
@@ -115,11 +115,20 @@ module.exports = {
                 const options = {
                     from: process.env.userEmail,
                     to: `${result.email}`,
-                    subject: 'Sending email with node.js',
+                    subject: 'Confirmation Commande',
                     html: `Merci Beaucoup pour votre confiance en notre équipe.
-                <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>Voici le lien vers le detail de la commande :
-                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br><br>Dès que votre commande sera traitée, nous vous enverrons une autre mail.
-                <br>Merci, bonne journée`,
+                <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>
+                Voici le lien vers le detail de la commande :
+                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br>
+                Dès que votre commande sera traitée, nous vous enverrons un autre mail.
+                <br><br>
+                
+                Thank you very much for your trust in our team.
+                <br>Your order is worth <b>${totalPrice} USD</b>.<br>
+                Here is the link to the detail of the order:
+                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br>
+                As soon as your order is processed, we will send you another email.
+                <br>Thanks, have a good day`,
                 }
 
                 await nodemailer.sendMail(options, function (err, res) {
