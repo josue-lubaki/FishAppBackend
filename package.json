@@ -27,7 +27,7 @@
     "express-jwt": "^6.1.0",
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^9.0.3",
+    "mocha": "^9.1.0",
     "mockgoose": "^8.0.4",
     "mongodb-client-encryption": "^1.2.5",
     "mongoose": "^5.13.7",
