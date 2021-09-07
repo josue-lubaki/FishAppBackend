@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
 require('dotenv').config()
+const paypal = require('paypal-rest-sdk')
 
 module.exports = {
     /**
