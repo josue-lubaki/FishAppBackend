@@ -18,7 +18,7 @@ const reservationSchema = mongoose.Schema({
         required: true,
         default: '1',
     },
-    note: {
+    notes: {
         type: String,
     },
     totalPrice: {

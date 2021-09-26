@@ -99,6 +99,7 @@ module.exports = {
             country: req.body.country,
             phone: req.body.phone,
             status: req.body.status,
+            notes: req.body.notes,
             totalPrice: totalPrice,
             user: req.body.user, // ID user
         })
@@ -162,6 +163,33 @@ module.exports = {
             req.params.id,
             {
                 status: req.body.status,
+            },
+            { new: true }
+        ).catch((err) => console.log(err))
+
+        if (!order) {
+            return res.status(400).send('the order cannot be update')
+        }
+
+        res.send(order)
+    },
+
+    /**
+     * Mettre à jour la note d'une commande via son ID
+     * @method findByIdAndUpdate()
+     * @method isValidObjectId()
+     * @see {new : true} : pour demander le renvoi de la nouvelle mise à jour et non l'ancienne
+     */
+    async updateNotesOrderById(req, res) {
+        mongoose.set('useFindAndModify', false) // https://mongoosejs.com/docs/deprecations.html#findandmodify
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(400).send('Invalid order ID')
+        }
+
+        const order = await Order.findByIdAndUpdate(
+            req.params.id,
+            {
+                notes: req.body.notes,
             },
             { new: true }
         ).catch((err) => console.log(err))

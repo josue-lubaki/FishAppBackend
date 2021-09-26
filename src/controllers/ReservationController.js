@@ -129,7 +129,6 @@ module.exports = {
                 user: req.body.user, // ID user
                 orderItems: orderItemIds,
                 status: req.body.status,
-                note: req.body.note,
                 totalPrice: totalPrice,
                 dateReservated: req.body.dateReservated,
                 avenue: req.body.avenue,
@@ -138,6 +137,7 @@ module.exports = {
                 apartment: req.body.apartment,
                 city: req.body.city,
                 country: req.body.country,
+                notes: req.body.notes,
             })
 
             reservation = await reservation.save()
