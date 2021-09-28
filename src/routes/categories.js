@@ -8,6 +8,7 @@ const authJwt = require('../../helpers/jwt')
  * @method find()
  * @method send()
  * @see /api/v1/categories
+ * @return {Category || success : "value"}
  */
 router.get(`/`, CategorieController.getAllCategories)
 
@@ -15,6 +16,7 @@ router.get(`/`, CategorieController.getAllCategories)
  * Récupérer une category à partir de son ID
  * @method findById()
  * @see /api/v1/categories/:id
+ * @return {Category || success : "value"}
  */
 router.get(`/:id`, CategorieController.getCategorieById)
 
@@ -23,6 +25,7 @@ router.get(`/:id`, CategorieController.getCategorieById)
  * @method save()
  * @method send()
  * @see /api/v1/categories
+ * @return { Category }
  */
 router.post('/', CategorieController.createCategorie)
 
@@ -30,6 +33,7 @@ router.post('/', CategorieController.createCategorie)
  * Suppression d'une category dans la collection Categories
  * @method findByIdAndDelete()
  * @see /api/v1/categories/:id
+ * @return {success : "value", message : "value"}
  */
 router.delete('/:id', CategorieController.deleteCategorieById)
 
@@ -37,6 +41,7 @@ router.delete('/:id', CategorieController.deleteCategorieById)
  * La Mise à jour d'un enregistrement via son ID
  * @method findByIdAndUpdate()
  * @see {new : true} : pour demander le renvoi de la nouvelle mise à jour et non l'ancienne
+ * @return { category }
  */
 router.put('/:id', CategorieController.updateCategorieById)
 

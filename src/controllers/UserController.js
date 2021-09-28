@@ -238,6 +238,7 @@ module.exports = {
             const userExist = await User.findById(req.params.id).catch((err) =>
                 console.log(err)
             )
+            
             let newPasswordHash
             if (req.body.password) {
                 newPasswordHash = bcrypt.hashSync(req.body.password, 10)

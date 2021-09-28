@@ -1,5 +1,6 @@
 const { Order } = require('../models/order')
 const { OrderItem } = require('../models/order-item')
+const { Product } = require('../models/product')
 const mongoose = require('mongoose')
 const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
@@ -114,6 +115,11 @@ module.exports = {
 
         await ControllerUser.getUserByIdMethode(req.body.user).then(
             async (result) => {
+                let host = req.hostname
+                if (req.hostname === 'localhost') {
+                    host = 'localhost:4200'
+                }
+
                 const options = {
                     from: process.env.userEmail,
                     to: `${result.email}`,
@@ -121,14 +127,14 @@ module.exports = {
                     html: `Merci Beaucoup pour votre confiance en notre équipe.
                 <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>
                 Voici le lien vers le detail de la commande :
-                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br>
+                ${req.protocol}://${host}/compte/orders/${order.id}<br>
                 Dès que votre commande sera traitée, nous vous enverrons un autre mail.
                 <br><br>
                 
                 Thank you very much for your trust in our team.
                 <br>Your order is worth <b>${totalPrice} USD</b>.<br>
                 Here is the link to the detail of the order:
-                https://josue-lubaki.github.io/psk/compte/orders/${order.id}<br>
+                ${req.protocol}://${host}/compte/orders/${order.id}<br>
                 As soon as your order is processed, we will send you another email.
                 <br>Thanks, have a good day`,
                 }
@@ -139,12 +145,47 @@ module.exports = {
                         return
                     }
 
-                    console.log('sent : ' + res.response)
+                    console.log('Response Code Email : ' + res.response)
                 })
-
-                console.log('email to : ', result.email)
             }
         )
+
+        // Réduire le nombre des produits à l'inventaire
+        await Promise.all(
+            req.body.orderItems.map(async (orderItem) => {
+                let newOrderItem = new OrderItem({
+                    quantity: orderItem.quantity,
+                    product: orderItem.product,
+                })
+
+                // Vérifier l'ID du produit
+                if (!mongoose.isValidObjectId(newOrderItem.product)) {
+                    return res.status(400).send('Invalid Produit Id')
+                }
+
+                // Vérifier si le produit existe
+                const product = await Product.findById(newOrderItem.product)
+                if (!product) {
+                    return res.status(400).send('Invalid Product')
+                }
+
+                const nouvelleValeur =
+                    product.countInStock - newOrderItem.quantity
+
+                // proceder à la reductione de product
+                const updatedProduct = await Product.findByIdAndUpdate(
+                    newOrderItem.product,
+                    {
+                        countInStock: nouvelleValeur,
+                    },
+                    { new: true }
+                )
+
+                if (!updatedProduct) {
+                    return res.status(500).send('the product cannot be updated')
+                }
+            })
+        ).catch((err) => console.log(err))
     },
 
     /**

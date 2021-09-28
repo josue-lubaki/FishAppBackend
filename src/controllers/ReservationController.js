@@ -1,6 +1,7 @@
 const { Reservation } = require('../models/reservation')
 const { OrderItem } = require('../models/order-item')
 const { User } = require('../models/user')
+const { Product } = require('../models/product')
 const mongoose = require('mongoose')
 const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
@@ -182,6 +183,45 @@ module.exports = {
                     console.log('email to : ', result.email)
                 }
             )
+
+            // Réduire le nombre des produits à l'inventaire
+            await Promise.all(
+                req.body.orderItems.map(async (orderItem) => {
+                    let newOrderItem = new OrderItem({
+                        quantity: orderItem.quantity,
+                        product: orderItem.product,
+                    })
+
+                    // Vérifier l'ID du produit
+                    if (!mongoose.isValidObjectId(newOrderItem.product)) {
+                        return res.status(400).send('Invalid Produit Id')
+                    }
+
+                    // Vérifier si le produit existe
+                    const product = await Product.findById(newOrderItem.product)
+                    if (!product) {
+                        return res.status(400).send('Invalid Product')
+                    }
+
+                    const nouvelleValeur =
+                        product.countInStock - newOrderItem.quantity
+
+                    // proceder à la reductione de product
+                    const updatedProduct = await Product.findByIdAndUpdate(
+                        newOrderItem.product,
+                        {
+                            countInStock: nouvelleValeur,
+                        },
+                        { new: true }
+                    )
+
+                    if (!updatedProduct) {
+                        return res
+                            .status(500)
+                            .send('the product cannot be updated')
+                    }
+                })
+            ).catch((err) => console.log(err))
         } catch (error) {
             throw Error(`Error while create reservation : ${error}`)
         }
