@@ -226,6 +226,37 @@ module.exports = {
             )
         }
     },
+    
+    /**
+     * Methode qui permet de connaître le nombre total des produits restant via son ID
+     * @param {*} req
+     * @param {*} res
+     * @see http://localhost:3000/api/v1/products/get/count/[:id]
+     */
+    async getCountProduct(req, res) {
+        try {
+            // Récupérer l'ID du produit
+            const product = await Product.findById(req.params.id)
+
+            if (!product) {
+                return res.status(500).json({
+                    success: false,
+                })
+            } else if (product.countInStock === 0) {
+                return res.status(200).json({
+                    success: true,
+                    countInStock: 0,
+                })
+            } else {
+                return res.status(200).json({
+                    success: true,
+                    countInStock: product.countInStock,
+                })
+            }
+        } catch (error) {
+            throw Error(`Error while getting count a product by ID : ${error}`)
+        }
+    },
 
     /**
      * Récuperer tous les produits ayant le champ "Featured" à true
