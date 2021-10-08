@@ -19,6 +19,8 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 3000
 /**************************************** */
 
+mongoose.set('debug', false)
+
 // connexion de la base des données
 database.connexionDB().then(() => {
     app.listen(PORT, () => {

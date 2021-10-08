@@ -145,7 +145,6 @@ module.exports = {
                     description: req.body.description,
                     richDescription: req.body.richDescription,
                     image: imagePath,
-                    brand: req.body.brand,
                     price: req.body.price,
                     category: req.body.category,
                     countInStock: req.body.countInStock,
@@ -226,7 +225,7 @@ module.exports = {
             )
         }
     },
-    
+
     /**
      * Methode qui permet de connaître le nombre total des produits restant via son ID
      * @param {*} req
@@ -299,9 +298,7 @@ module.exports = {
 
             const files = req.files
             let imagesPaths = []
-            const basePath = `${req.protocol}://${req.get(
-                'host'
-            )}/public/uploads/`
+            const basePath = `https://fish-sales-application.herokuapp.com/public/uploads/`
 
             if (files) {
                 files.map((file) => {
