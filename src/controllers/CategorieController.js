@@ -57,7 +57,6 @@ module.exports = {
         try {
             let category = new Category({
                 name: req.body.name,
-                icon: req.body.icon,
                 color: req.body.color,
             })
 
@@ -120,7 +119,6 @@ module.exports = {
                 req.params.id,
                 {
                     name: req.body.name,
-                    icon: req.body.icon,
                     color: req.body.color,
                 },
                 { new: true }

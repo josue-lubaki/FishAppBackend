@@ -36,6 +36,16 @@ router.post(`/`, ReservationController.createReservation)
 router.put('/:id', ReservationController.updateReservationById)
 
 /**
+ * Mettre à jour la note d'une reservation via son ID
+ * @method findByIdAndUpdate()
+ * @method isValidObjectId()
+ * @see {new : true} : pour demander le renvoi de la nouvelle mise à jour et non l'ancienne
+ * @see http://localhost:3000/api/v1/reservation/notes/:id
+ * @return { Order }
+ */
+router.put('/notes/:id', ReservationController.updateNotesReservationById)
+
+/**
  * Suppression d'une reservation via son ID
  * @see http://localhost:3000/api/v1/Reservations/:id
  * @param id identifiant de la Reservation à supprimer
@@ -46,7 +56,7 @@ router.delete(`/:id`, ReservationController.deleteReservationById)
 /**
  * Methode qui permet de calculer le nombre des Reservations dans la collections Reservations
  * @method countDocuments()
- * @see http://localhost:3000/api/v1/Reservations/get/count
+ * @see http://localhost:3000/api/v1/reservations/get/count
  * @return { reservationCount:"value" || success : "value", message : "value" }
  */
 router.get('/get/count', ReservationController.getCountAllReservation)
