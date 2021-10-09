@@ -32,7 +32,7 @@
     "mockgoose": "^8.0.4",
     "mongodb": "^4.1.1",
     "mongodb-client-encryption": "^1.2.7",
-    "mongoose": "^5.13.7",
+    "mongoose": "^6.0.10",
     "mongoose-legacy-pluralize": "^1.0.2",
     "morgan": "^1.10.0",
     "mpath": "^0.8.4",
