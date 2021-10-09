@@ -264,6 +264,33 @@ module.exports = {
     },
 
     /**
+     * Mettre à jour la note d'une commande via son ID
+     * @method findByIdAndUpdate()
+     * @method isValidObjectId()
+     * @see {new : true} : pour demander le renvoi de la nouvelle mise à jour et non l'ancienne
+     */
+    async updateNotesReservationById(req, res) {
+        mongoose.set('useFindAndModify', false) // https://mongoosejs.com/docs/deprecations.html#findandmodify
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(400).send('Invalid order ID')
+        }
+
+        const reservation = await Reservation.findByIdAndUpdate(
+            req.params.id,
+            {
+                notes: req.body.notes,
+            },
+            { new: true }
+        ).catch((err) => console.log(err))
+
+        if (!reservation) {
+            return res.status(400).send('the order cannot be update')
+        }
+
+        res.send(reservation)
+    },
+
+    /**
      * Suppression d'une reservation via son ID
      * @see http://localhost:3000/api/v1/reservations/:id
      * @param id identifiant de la reservation à supprimer

@@ -145,7 +145,7 @@ module.exports = {
                         isAdmin: user.isAdmin,
                     },
                     secret,
-                    { expiresIn: '1d' }
+                    { expiresIn: '10m' }
                 )
 
                 res.status(200).send({
@@ -238,7 +238,7 @@ module.exports = {
             const userExist = await User.findById(req.params.id).catch((err) =>
                 console.log(err)
             )
-            
+
             let newPasswordHash
             if (req.body.password) {
                 newPasswordHash = bcrypt.hashSync(req.body.password, 10)
