@@ -133,4 +133,33 @@ module.exports = {
             throw new Error(`Error while updating a category : ${error}`)
         }
     },
+
+    /**
+     * Methode qui permet de calculer le nombre des Products dans la collections Products
+     * @method countDocuments()
+     * @see http://localhost:3000/api/v1/orders/get/count
+     */
+    async getCountCategories(req, res) {
+        try {
+            const categorieCount = await Category.countDocuments((count) => count)
+
+            if (categorieCount === 0) {
+                return res.status(200).json({
+                    categorieCount: 0,
+                })
+            } else if (!categorieCount) {
+                return res.status(500).json({
+                    success: false,
+                })
+            }
+
+            return res.send({
+                categorieCount: categorieCount,
+            })
+        } catch (error) {
+            throw new Error(
+                `Error while getting Total Count of Orders : ${error}`
+            )
+        }
+    },
 }

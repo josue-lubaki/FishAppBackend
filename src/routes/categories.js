@@ -45,4 +45,12 @@ router.delete('/:id', CategorieController.deleteCategorieById)
  */
 router.put('/:id', CategorieController.updateCategorieById)
 
+/**
+ * Methode qui permet de calculer le nombre des Products dans la collections Products
+ * @method countDocuments()
+ * @see http://localhost:3000/api/v1/categories/get/count
+ * @return { orderCount: "value" || success : "value" }
+ */
+router.get('/get/count', CategorieController.getCountCategories)
+
 module.exports = router
