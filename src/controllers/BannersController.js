@@ -43,20 +43,32 @@ module.exports = {
     async createBanner(req, res) {
         try {
             // Vérifier si l'image existe dans la requête
+            /*
+                fieldname: 'image',
+                originalname: 'poisson-glace.jpg',
+                encoding: '7bit',
+                mimetype: 'image/jpeg',
+                size: 2344967,
+                bucket: 'fish-bucket-images',
+                key: 'poisson-glace.jpg-1634108886181.jpg',
+                acl: 'private',
+                contentType: 'application/octet-stream',
+                contentDisposition: null,
+                storageClass: 'STANDARD',
+                serverSideEncryption: null,
+                metadata: { fieldName: 'image' },
+                location: 'https://fish-bucket-images.s3.amazonaws.com/poisson-glace.jpg-1634108886181.jpg',
+                etag: '"a450c99f52ad469a35a771918be04c77"',
+                versionId: undefined
+             */
             const file = req.file
             if (!file) {
                 return res.status(400).send('No Image in the request')
             }
 
-            const fileName = req.file.filename
-            // const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-            const basePath = `${req.protocol}://${req.get(
-                'host'
-            )}/public/uploads/`
-
             let banner = new Banner({
                 name: req.body.name,
-                image: `${basePath}${fileName}` || '', // http://localhost:3000/public/uploads/image-2323232.jpeg
+                image: file.location,
             })
 
             banner = await banner.save()

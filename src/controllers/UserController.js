@@ -145,7 +145,7 @@ module.exports = {
                         isAdmin: user.isAdmin,
                     },
                     secret,
-                    { expiresIn: '10m' }
+                    { expiresIn: '30m' }
                 )
 
                 res.status(200).send({

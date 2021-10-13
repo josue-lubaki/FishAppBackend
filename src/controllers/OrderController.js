@@ -6,6 +6,9 @@ const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
 require('dotenv').config()
 const paypal = require('paypal-rest-sdk')
+const accountSid = process.env.ACCOUNTSIDTWILIO
+const authToken = process.env.AUTHTOKENTWILIO   
+const client = require('twilio')(accountSid, authToken)
 
 module.exports = {
     /**
@@ -147,6 +150,28 @@ module.exports = {
 
                     console.log('Response Code Email : ' + res.response)
                 })
+
+                await client.messages
+                    .create({
+                        body: `Merci Beaucoup pour votre confiance en notre équipe.
+
+Votre commande fait un montant de ${totalPrice} USD
+Voici le lien vers le detail de la commande :
+${req.protocol}://${host}/compte/orders/${order.id}
+Dès que votre commande sera traitée, nous vous enverrons un autre mail.
+
+Thank you very much for your trust in our team.
+Your order is worth ${totalPrice} USD
+Here is the link to the detail of the order:
+${req.protocol}://${host}/compte/orders/${order.id}
+As soon as your order is processed, we will send you another email.
+Thanks, have a good day`,
+                        messagingServiceSid:
+                            process.env.MESSAGING_TWILIO_SERVICE,
+                        to: result.phone,
+                    })
+                    .then((message) => console.log(message.sid))
+                    .done()
             }
         )
 

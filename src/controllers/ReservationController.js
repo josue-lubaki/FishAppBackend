@@ -5,6 +5,9 @@ const { Product } = require('../models/product')
 const mongoose = require('mongoose')
 const nodemailer = require('../../helpers/nodemailer')
 const ControllerUser = require('./UserController')
+const accountSid = process.env.ACCOUNTSIDTWILIO
+const authToken = process.env.AUTHTOKENTWILIO
+const client = require('twilio')(accountSid, authToken)
 
 module.exports = {
     /**
@@ -180,7 +183,31 @@ module.exports = {
                         console.log('sent : ' + res.response)
                     })
 
+                    await client.messages
+                        .create({
+                            body: `Merci Beaucoup pour votre confiance en notre équipe.
+                            
+Votre Réservation fait un montant de ${totalPrice} USD
+Voici le lien vers le detail de la Réservation :
+https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}
+Dès que votre Réservation sera traitée, nous vous enverrons un autre mail.
+
+
+Thank you very much for your trust in our team.
+Your reservation is worth ${totalPrice} USD
+Here is the link to the detail of the reservation:
+https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}
+As soon as your reservation is processed, we will send you another email.
+Thanks, have a good day`,
+                            messagingServiceSid:
+                                process.env.MESSAGING_TWILIO_SERVICE,
+                            to: result.phone,
+                        })
+                        .then((message) => console.log(message.sid))
+                        .done()
+
                     console.log('email to : ', result.email)
+                    console.log('SMS send to : ', result.phone)
                 }
             )
 

@@ -2,9 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const BannerController = require('../controllers/BannersController')
-
-const Storage = require('../../helpers/storage')
-const uploadOptions = multer({ storage: Storage })
+const uploadOptions = require('../../helpers/s3Upload')
 
 /**
  * Récupération de toutes les images
