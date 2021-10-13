@@ -2,11 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const ProductController = require('../controllers/ProductController')
-
-// contient les extensions dont nous souhaitons supportées
-const Storage = require('../../helpers/storage')
-
-const uploadOptions = multer({ storage: Storage })
+const uploadOptions = require('../../helpers/s3Upload')
 
 /**
  * Récupération de tous les produits
@@ -88,7 +84,7 @@ router.get('/get/featured/:count', ProductController.getAllFeaturedProduct)
  */
 router.put(
     '/gallery-images/:id',
-    uploadOptions.array('images', 10),
+    uploadOptions.array('images', 3),
     ProductController.updateImagesProductById
 )
 

@@ -72,7 +72,6 @@ function authJwt() {
  * @param {*} done(callback, reject)
  */
 async function isRevoked(req, payload, done) {
-    console.log('Request ', req)
     if (!payload.isAdmin) {
         done(null, true)
     } else if (req.url.includes('orders')) {

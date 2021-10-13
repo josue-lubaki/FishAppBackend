@@ -71,17 +71,11 @@ module.exports = {
                 return res.status(400).send('No Image in the request')
             }
 
-            const fileName = req.file.filename
-            // const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-            const basePath = `${req.protocol}://${req.get(
-                'host'
-            )}/public/uploads/`
-
             let product = new Product({
                 name: req.body.name,
                 description: req.body.description,
                 richDescription: req.body.richDescription,
-                image: `${basePath}${fileName}` || '', // http://localhost:3000/public/uploads/image-2323232.jpeg
+                image: file.location,
                 price: req.body.price,
                 category: req.body.category,
                 countInStock: req.body.countInStock,
@@ -129,11 +123,7 @@ module.exports = {
             let imagePath
 
             if (file) {
-                const basePath = `${req.protocol}://${req.get(
-                    'host'
-                )}/public/uploads/`
-                const fileName = file.filename
-                imagePath = `${basePath}${fileName}`
+                imagePath = file.location
             } else {
                 imagePath = product.image
             }
@@ -298,11 +288,10 @@ module.exports = {
 
             const files = req.files
             let imagesPaths = []
-            const basePath = `https://fish-sales-application.herokuapp.com/public/uploads/`
 
             if (files) {
                 files.map((file) => {
-                    imagesPaths.push(`${basePath}${file.filename}`)
+                    imagesPaths.push(file.location)
                 })
             }
 

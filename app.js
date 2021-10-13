@@ -22,11 +22,16 @@ const PORT = process.env.PORT || 3000
 mongoose.set('debug', false)
 
 // connexion de la base des données
-database.connexionDB().then(() => {
-    app.listen(PORT, () => {
-        console.log('Welcome : http://localhost:3000/api/v1/')
+database
+    .connexionDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log('Welcome : http://localhost:3000/api/v1/')
+        })
     })
-})
+    .catch((err) => {
+        console.log(err)
+    })
 
 // Routers
 const categoriesRoutes = require('./src/routes/categories')
