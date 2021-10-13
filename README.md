@@ -1,2 +1,2 @@
-# FishAppBackend [![wakatime](https://wakatime.com/badge/github/josue-lubaki/FishAppBackend.svg)](https://wakatime.com/badge/github/josue-lubaki/FishAppBackend)
+# FishAppBackend [![wakatime](https://wakatime.com/badge/github/josue-lubaki/FishAppBackend.svg)](https://wakatime.com/badge/github/josue-lubaki/FishAppBackend) [![CircleCI](https://circleci.com/gh/josue-lubaki/FishAppBackend/tree/main.svg?style=svg&circle-token=f977735561fd7d6eadd35a153d67b8ceeccf57e9)](https://circleci.com/gh/josue-lubaki/FishAppBackend/tree/main)
 Réalisation d'un site web de vente des poissons
