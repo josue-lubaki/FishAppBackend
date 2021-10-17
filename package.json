@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon app",
+    "dev": "nodemon NODE_ENV=development nodemon app",
     "test": "mocha --recursive --timeout=30000 --exit"
   },
   "author": "Josue Lubaki",
@@ -38,8 +38,8 @@
     "morgan": "^1.10.0",
     "mpath": "^0.8.4",
     "multer": "^1.4.3",
-    "multer-s3": "^2.9.0",
-    "nodemailer": "^6.7.0",
+    "multer-s3": "^2.9.1",
+    "nodemailer": "^6.6.3",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.13",
     "paypal-rest-sdk": "^1.8.1",
@@ -48,7 +48,10 @@
     "sinon": "^11.1.1",
     "stripe": "^8.181.0",
     "supertest": "^6.1.6",
+    "swagger-ui-express": "^4.1.6",
     "twilio": "^3.69.0",
-    "xoauth2": "^1.2.0"
+    "xoauth2": "^1.2.0",
+    "xss-clean": "^0.1.1",
+    "yamljs": "^0.3.0"
   }
 }

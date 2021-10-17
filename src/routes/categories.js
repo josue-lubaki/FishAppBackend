@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const CategorieController = require('../controllers/CategorieController')
-const authJwt = require('../../helpers/jwt')
+const asyncWrapper = require('../../helpers/middleware/asyncWrapper')
 
 /**
  * Récuperation des caterogies contenues dans la collection Categories
@@ -10,7 +10,7 @@ const authJwt = require('../../helpers/jwt')
  * @see /api/v1/categories
  * @return {Category || success : "value"}
  */
-router.get(`/`, CategorieController.getAllCategories)
+router.get(`/`, asyncWrapper(CategorieController.getAllCategories))
 
 /**
  * Récupérer une category à partir de son ID
@@ -18,7 +18,7 @@ router.get(`/`, CategorieController.getAllCategories)
  * @see /api/v1/categories/:id
  * @return {Category || success : "value"}
  */
-router.get(`/:id`, CategorieController.getCategorieById)
+router.get(`/:id`, asyncWrapper(CategorieController.getCategorieById))
 
 /**
  * Création d'une nouvelle Category dans la collection catégories
@@ -27,7 +27,7 @@ router.get(`/:id`, CategorieController.getCategorieById)
  * @see /api/v1/categories
  * @return { Category }
  */
-router.post('/', CategorieController.createCategorie)
+router.post('/', asyncWrapper(CategorieController.createCategorie))
 
 /**
  * Suppression d'une category dans la collection Categories
@@ -35,7 +35,7 @@ router.post('/', CategorieController.createCategorie)
  * @see /api/v1/categories/:id
  * @return {success : "value", message : "value"}
  */
-router.delete('/:id', CategorieController.deleteCategorieById)
+router.delete('/:id', asyncWrapper(CategorieController.deleteCategorieById))
 
 /**
  * La Mise à jour d'un enregistrement via son ID
@@ -43,7 +43,7 @@ router.delete('/:id', CategorieController.deleteCategorieById)
  * @see {new : true} : pour demander le renvoi de la nouvelle mise à jour et non l'ancienne
  * @return { category }
  */
-router.put('/:id', CategorieController.updateCategorieById)
+router.put('/:id', asyncWrapper(CategorieController.updateCategorieById))
 
 /**
  * Methode qui permet de calculer le nombre des Products dans la collections Products
@@ -51,6 +51,6 @@ router.put('/:id', CategorieController.updateCategorieById)
  * @see http://localhost:3000/api/v1/categories/get/count
  * @return { orderCount: "value" || success : "value" }
  */
-router.get('/get/count', CategorieController.getCountCategories)
+router.get('/get/count', asyncWrapper(CategorieController.getCountCategories))
 
 module.exports = router

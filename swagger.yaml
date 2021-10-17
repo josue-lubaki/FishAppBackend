@@ -1,0 +1,1500 @@
+openapi: 3.0.0
+info:
+  title: FishApp API
+  contact:
+    name: Josue Lubaki
+    url: https://josue-lubaki.ca
+    email: josuelubaki@gmail.com
+  version: '1.0'
+servers:
+  - url: https://fish-sales-application.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: getAll
+      description: Methode qui permet de récupérer tous les utilisateurs
+      operationId: getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Users
+      summary: create
+      description: Méthode qui permet de créer un utilisateur
+      operationId: create
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createrequest'
+            example:
+              name: Veteran
+              email: veteran@gmail.com
+              password: veteran
+              phone: 18736641270
+              isAdmin: 'false'
+              avenue: Etat major
+              apartment: 43A
+              quartier: Bureaucratique
+              commune: Assaut
+              city: Kinshasa
+              country: COD
+              question: Quelle est mon titre à l'armée
+              reponse: Major
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the user id
+    get:
+      tags:
+        - Users
+      summary: getUser
+      description: Methode qui permet de récupérer un utilisateur selon son ID
+      operationId: getUser
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Users
+      summary: update
+      description: Méthode qui permet de mettre à jour les informations de l'utilisateur
+      operationId: update
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updaterequest'
+            example:
+              name: Veteran
+              email: veteran@gmail.com
+              phone: 18736641270
+              isAdmin: 'false'
+              avenue: Etat major
+              apartment: 43A
+              quartier: Bureaucratique
+              commune: Assaut
+              city: Kinshasa
+              country: COD
+              question: Quelle est mon titre à l'armée
+              reponse: General
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Users
+      summary: delete
+      operationId: delete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/exist/{id}:
+    get:
+      tags:
+        - Users
+      summary: isExist
+      description: Méthode qui permet de vérifier si l'utilisateur existe ou pas
+      operationId: isExist
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: the user id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /users/get/count:
+    get:
+      tags:
+        - Users
+      summary: count
+      description: |-
+        Renvoi le nombre des Utilisateurs,<br>
+        @return <b>userCount<b>
+      operationId: count
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /users/compte/forgot/get/question:
+    post:
+      tags:
+        - Users
+      summary: getSecureQuestion
+      description: Methode qui permet de récupérer la question de sécurité d'un utilisateur
+      operationId: getSecureQuestion
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getSecureQuestionRequest'
+            example:
+              email: veteran@gmail.com
+              phone: 18736641270
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /users/compte/forgot/get/response/{id}:
+    post:
+      tags:
+        - Users
+      summary: verifySecureResponse
+      description: >-
+        Methode qui permet de verifier si la réponse donnée par l'utilisateur
+        correspond à celle de securité
+      operationId: verifySecureResponse
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: the user id
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifySecureResponseRequest'
+            example:
+              reponse: Major
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/compte/forgot/reset/{id}:
+    patch:
+      tags:
+        - Users
+      summary: resetPassword
+      description: Methode qui permet à l'utilisateur de reset son mot de passe oublié
+      operationId: resetPassword
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: the user id
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resetPasswordRequest'
+            example:
+              password: veteran
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /categories:
+    post:
+      tags:
+        - Categories
+      summary: create
+      description: Méthode qui permet de créer une catégorie
+      operationId: Postcreate
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createrequest1'
+            example:
+              name: Bijoux
+              color: '#d5f'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - Categories
+      summary: getAll
+      description: Méthode qui permet de récupérer toutes les catégories
+      operationId: GetgetAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /categories/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the category id
+    get:
+      tags:
+        - Categories
+      summary: getCategory
+      description: Méthode qui permet de récupérer une catégorie
+      operationId: getCategory
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Categories
+      summary: delete
+      description: Méthode qui permet de supprimer une catégorie
+      operationId: Deletedelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Categories
+      summary: update
+      description: Methode qui permet de mettre à jour une categorie
+      operationId: Putupdate
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updaterequest1'
+            example:
+              name: Bijoux
+              color: '#F2D'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /categories/get/count:
+    get:
+      tags:
+        - Categories
+      summary: count
+      description: |-
+        Méthode qui permet d'obtenir le nombre total des catégories,<br>
+        @return <b>categorieCount</b>
+      operationId: Getcount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /banners:
+    get:
+      tags:
+        - Banners
+      summary: getAll
+      operationId: GetgetAll1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    post:
+      tags:
+        - Banners
+      summary: create
+      description: Méthode qui permet de créer un Banner
+      operationId: Postcreate1
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+                - name
+                - image
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: banner_Lateral
+                image:
+                  type: string
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /banners/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the banner id
+    get:
+      tags:
+        - Banners
+      summary: getbanner
+      description: Méthode qui permet de récupérer un Banner
+      operationId: getbanner
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Banners
+      summary: delete
+      description: Méthode qui permet de supprimer un Banner
+      operationId: Deletedelete1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products:
+    get:
+      tags:
+        - products
+      summary: getAll
+      description: Méthode qui permet de récupérer tous les produits
+      operationId: GetgetAll12
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    post:
+      tags:
+        - products
+      summary: create
+      description: Méthode qui permet de créer un produit
+      operationId: Postcreate12
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+                - name
+                - description
+                - richDescription
+                - image
+                - price
+                - category
+                - countInStock
+                - isFeatured
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Crevette
+                description:
+                  type: string
+                  example: nous possedons de bon crevette frais
+                richDescription:
+                  type: string
+                  example: >-
+                    Les crevettes sont des fruits de mer très populaires, elles
+                    sont délicieuses et faciles à cuire. Disponibles fraîches ou
+                    congelées, nous vous proposons des crevettes sauvages de
+                    première qualité. Découvrez les crevettes nordiques locales
+                    du Québec, les crevettes sauvages du Golfe et du Pacifique,
+                    les crevettes entières avec tête, et les crevettes
+                    d'aquaculture responsable décortiquées et pelées
+                image:
+                  type: string
+                price:
+                  type: integer
+                  format: int32
+                  example: 12
+                category:
+                  type: string
+                  example: 60e41298c5b238bb74af72bd
+                countInStock:
+                  type: integer
+                  format: int32
+                  example: 40
+                isFeatured:
+                  type: boolean
+                  example: true
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the product id
+    get:
+      tags:
+        - products
+      summary: getProduct
+      description: Méthode qui permet de recupérer un produit
+      operationId: getProduct
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products/get/count:
+    get:
+      tags:
+        - products
+      summary: count
+      description: |-
+        Méthode qui permet d'obtenir le nombre total des produits<br>
+        @return <b>productCount</b>
+      operationId: Getcount1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /products/get/count/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the product id
+    get:
+      tags:
+        - products
+      summary: countStock
+      description: Méthode qui permet d'obtenir le nombre total en stock d'un produit
+      operationId: countStock
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - products
+      summary: update
+      description: Méthode qui permet de faire la mise à jour d'un produit
+      operationId: Putupdate1
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+                - name
+                - description
+                - richDescription
+                - image
+                - price
+                - category
+                - countInStock
+                - isFeatured
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Crevette
+                description:
+                  type: string
+                  example: nous possedons de bon crevette frais
+                richDescription:
+                  type: string
+                  example: >-
+                    Les crevettes sont des fruits de mer très populaires, elles
+                    sont délicieuses et faciles à cuire. Disponibles fraîches ou
+                    congelées, nous vous proposons des crevettes sauvages de
+                    première qualité. Découvrez les crevettes nordiques locales
+                    du Québec, les crevettes sauvages du Golfe et du Pacifique,
+                    les crevettes entières avec tête, et les crevettes
+                    d'aquaculture responsable décortiquées et pelées
+                image:
+                  type: string
+                price:
+                  type: integer
+                  format: int32
+                  example: 12
+                category:
+                  type: string
+                  example: 60e41298c5b238bb74af72bd
+                countInStock:
+                  type: integer
+                  format: int32
+                  example: 40
+                isFeatured:
+                  type: boolean
+                  example: true
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - products
+      summary: delete
+      description: Méthode qui permet de supprimer un produit
+      operationId: Deletedelete12
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products/gallery-images/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the product id
+    put:
+      tags:
+        - products
+      summary: addGalleria
+      description: Mettre à jour le tableau d'image pour un produit
+      operationId: addGalleria
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+                - images
+              type: object
+              properties:
+                images:
+                  type: string
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products/get/featured/{number}:
+    get:
+      tags:
+        - products
+      summary: featured
+      description: Méthode ui permet de renvoyer une liste de produits mise en avant
+      operationId: featured
+      parameters:
+        - in: path
+          name: number
+          schema:
+            type: string
+          required: true
+          description: number of products to display
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: getAll
+      description: Méthode qui permet de récupérer toutes les commandes
+      operationId: GetgetAll123
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Orders
+      summary: make
+      description: Méthode qui permet à un utilisateur de passer sa commande
+      operationId: make
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/makerequest'
+            example:
+              orderItems:
+                - product: 60e4239180ba6071bc7f0651
+                  quantity: 2
+              avenue: Richardson
+              apartment: 22B
+              quartier: Papineau
+              commune: Freezer
+              city: London
+              country: GB
+              phone: 1876641270
+              status: '1'
+              notes: je la veux le plus tôt possible
+              user: 60e404e210106056d0a27d36
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the order id
+    get:
+      tags:
+        - Orders
+      summary: getOrder
+      description: Méthode qui permet de récupérer une commande via son ID
+      operationId: getOrder
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Orders
+      summary: updateStatus
+      description: Méthode qui permet de mettre à jour le status d'une commande via son ID
+      operationId: updateStatus
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateStatusRequest'
+            example:
+              status: '2'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Orders
+      summary: delete
+      description: Méthode qui permet de supprimer une commande via son ID
+      operationId: Deletedelete123
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/get/userorder/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the user id
+    get:
+      tags:
+        - Orders
+      summary: getAllOrdersByUserID
+      description: >-
+        Méthode qui permet de récupérer toutes les commandes effectuées par un
+        client via son ID
+      operationId: getAllOrdersByUserID
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/get/count:
+    get:
+      tags:
+        - Orders
+      summary: count
+      description: >-
+        Méthode qui permet d'obtenir le nombre total des commandes
+        effectuées.<br>
+
+        @return <b>orderCount</b>
+      operationId: Getcount12
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /orders/get/totalsales:
+    get:
+      tags:
+        - Orders
+      summary: TotalSales
+      description: |-
+        Méthode qui permet d'obtenir la valeur totale des commandes vendues.<br>
+        @return <b>totalSales</b>
+      operationId: TotalSales
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/notes/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the order id
+    put:
+      tags:
+        - Orders
+      summary: updateNotes
+      description: Méthode qui permet de mettre à jour la note d'une commande via son ID
+      operationId: updateNotes
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateNotesRequest'
+            example:
+              notes: je la veux le plus rapidement possible
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /reservations:
+    get:
+      tags:
+        - Reservations
+      summary: getAll
+      description: Méthode qui permet de récupérer toutes les réservations
+      operationId: GetgetAll1234
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Reservations
+      summary: make
+      description: Méthode qui permet de passer une réservation
+      operationId: Postmake
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/makerequest1'
+            example:
+              user: 60e404e210106056d0a27d36
+              orderItems:
+                - product: 60e4239180ba6071bc7f0651
+                  quantity: 2
+              status: '1'
+              avenue: Richardson
+              apartment: 22B
+              quartier: Papineau
+              commune: Freezer
+              city: London
+              country: GB
+              notes: je la veux le plus tôt possible
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /reservations/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the reservation id
+    get:
+      tags:
+        - Reservations
+      summary: getReservation
+      description: Méthode qui permet de récupérer les informations d'une réservation
+      operationId: getReservation
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Reservations
+      summary: updateStatus
+      description: Méthode qui permte de mettre à jour une réservation via son ID
+      operationId: PutupdateStatus
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateStatusRequest'
+            example:
+              status: '2'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /reservations/get/count:
+    get:
+      tags:
+        - Reservations
+      summary: count
+      description: >-
+        Méthode qui permet d'obtenir le total de toutes les reservations
+        effectuées.<br>
+
+        @return <b>reservationCount<b>
+      operationId: Getcount123
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /reservations/get/totalreserved:
+    get:
+      tags:
+        - Reservations
+      summary: TotalReserved
+      description: >-
+        Méthode qui permet d'obtenir le montant total de toutes les
+        réservations.<br>
+
+        @return <b>totalReserved</b>
+      operationId: TotalReserved
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /reservations/get/user/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the user id
+    get:
+      tags:
+        - Reservations
+      summary: getAllReservationsUserByID
+      description: >-
+        Méthode qui permet de récupérer toutes les réservations d'un utilisateur
+        via son ID
+      operationId: getAllReservationsUserByID
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /reservations/notes/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the reservation id
+    put:
+      tags:
+        - Reservations
+      summary: updateNotes
+      description: >-
+        Méthode qui permet de mettre à jour la notes d'une réservation via son
+        ID
+      operationId: PutupdateNotes
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateNotesRequest'
+            example:
+              notes: Jolie emballage svp
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/login:
+    post:
+      tags:
+        - Auth
+      summary: login
+      description: Méthode qui permet à l'utilisateur de se logger (Authentifier)
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginrequest'
+            example:
+              email: johnDoe@gmail.com
+              password: john
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /users/register:
+    post:
+      tags:
+        - Auth
+      summary: register
+      description: >-
+        Méthode qui permet à l'utilisateur de s'enregistrer dans la base de
+        données
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerrequest'
+            example:
+              name: Veteran
+              email: veteran@gmail.com
+              password: veteran
+              phone: 18736641270
+              isAdmin: 'false'
+              avenue: Etat major
+              apartment: 43A
+              quartier: Bureaucratique
+              commune: Assaut
+              city: Kinshasa
+              country: COD
+              question: Quelle est mon titre à l'armée
+              reponse: Major
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: johnDoe@gmail.com
+        password: john
+    registerrequest:
+      title: registerrequest
+      required:
+        - name
+        - email
+        - password
+        - phone
+        - isAdmin
+        - avenue
+        - apartment
+        - quartier
+        - commune
+        - city
+        - country
+        - question
+        - reponse
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        isAdmin:
+          type: string
+        avenue:
+          type: string
+        apartment:
+          type: string
+        quartier:
+          type: string
+        commune:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        question:
+          type: string
+        reponse:
+          type: string
+      example:
+        name: Veteran
+        email: veteran@gmail.com
+        password: veteran
+        phone: 18736641270
+        isAdmin: 'false'
+        avenue: Etat major
+        apartment: 43A
+        quartier: Bureaucratique
+        commune: Assaut
+        city: Kinshasa
+        country: COD
+        question: Quelle est mon titre à l'armée
+        reponse: Major
+    createrequest:
+      title: createUser
+      required:
+        - name
+        - email
+        - password
+        - phone
+        - isAdmin
+        - avenue
+        - apartment
+        - quartier
+        - commune
+        - city
+        - country
+        - question
+        - reponse
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        isAdmin:
+          type: string
+        avenue:
+          type: string
+        apartment:
+          type: string
+        quartier:
+          type: string
+        commune:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        question:
+          type: string
+        reponse:
+          type: string
+      example:
+        name: Veteran
+        email: veteran@gmail.com
+        password: veteran
+        phone: 18736641270
+        isAdmin: 'false'
+        avenue: Etat major
+        apartment: 43A
+        quartier: Bureaucratique
+        commune: Assaut
+        city: Kinshasa
+        country: COD
+        question: Quelle est mon titre à l'armée
+        reponse: Major
+    updaterequest:
+      title: updateUser
+      required:
+        - name
+        - email
+        - phone
+        - isAdmin
+        - avenue
+        - apartment
+        - quartier
+        - commune
+        - city
+        - country
+        - question
+        - reponse
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        isAdmin:
+          type: string
+        avenue:
+          type: string
+        apartment:
+          type: string
+        quartier:
+          type: string
+        commune:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        question:
+          type: string
+        reponse:
+          type: string
+      example:
+        name: Veteran
+        email: veteran@gmail.com
+        phone: 18736641270
+        isAdmin: 'false'
+        avenue: Etat major
+        apartment: 43A
+        quartier: Bureaucratique
+        commune: Assaut
+        city: Kinshasa
+        country: COD
+        question: Quelle est mon titre à l'armée
+        reponse: General
+    getSecureQuestionRequest:
+      title: getSecureQuestionRequest
+      required:
+        - email
+        - phone
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+      example:
+        email: veteran@gmail.com
+        phone: 18736641270
+    verifySecureResponseRequest:
+      title: verifySecureResponseRequest
+      required:
+        - reponse
+      type: object
+      properties:
+        reponse:
+          type: string
+      example:
+        reponse: Major
+    resetPasswordRequest:
+      title: resetPasswordRequest
+      required:
+        - password
+      type: object
+      properties:
+        password:
+          type: string
+      example:
+        password: veteran
+    createrequest1:
+      title: createCategory
+      required:
+        - name
+        - color
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+      example:
+        name: Bijoux
+        color: '#d5f'
+    updaterequest1:
+      title: updateCategory
+      required:
+        - name
+        - color
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+      example:
+        name: Bijoux
+        color: '#F2D'
+    makerequest:
+      title: makeOrder
+      required:
+        - orderItems
+        - avenue
+        - apartment
+        - quartier
+        - commune
+        - city
+        - country
+        - phone
+        - status
+        - notes
+        - user
+      type: object
+      properties:
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          description: ''
+        avenue:
+          type: string
+        apartment:
+          type: string
+        quartier:
+          type: string
+        commune:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        phone:
+          type: string
+        status:
+          type: string
+        notes:
+          type: string
+        user:
+          type: string
+      example:
+        orderItems:
+          - product: 60e4239180ba6071bc7f0651
+            quantity: 2
+        avenue: Richardson
+        apartment: 22B
+        quartier: Papineau
+        commune: Freezer
+        city: London
+        country: GB
+        phone: 1876641270
+        status: '1'
+        notes: je la veux le plus tôt possible
+        user: 60e404e210106056d0a27d36
+    OrderItem:
+      title: OrderItem
+      required:
+        - product
+        - quantity
+      type: object
+      properties:
+        product:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+      example:
+        product: 60e4239180ba6071bc7f0651
+        quantity: 2
+    updateNotesRequest:
+      title: updateNotesOrder
+      required:
+        - notes
+      type: object
+      properties:
+        notes:
+          type: string
+      example:
+        notes: je la veux le plus rapidement possible
+    updateStatusRequest:
+      title: updateStatusOrder
+      required:
+        - status
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: '2'
+    makerequest1:
+      title: makeReservation
+      required:
+        - user
+        - orderItems
+        - status
+        - avenue
+        - apartment
+        - quartier
+        - commune
+        - city
+        - country
+        - notes
+      type: object
+      properties:
+        user:
+          type: string
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          description: ''
+        status:
+          type: string
+        avenue:
+          type: string
+        apartment:
+          type: string
+        quartier:
+          type: string
+        commune:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        notes:
+          type: string
+      example:
+        user: 60e404e210106056d0a27d36
+        orderItems:
+          - product: 60e4239180ba6071bc7f0651
+            quantity: 2
+        status: '1'
+        avenue: Richardson
+        apartment: 22B
+        quartier: Papineau
+        commune: Freezer
+        city: London
+        country: GB
+        notes: je la veux le plus tôt possible
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+    description: Authentification
+  - name: Users
+    description: Gestion des Utilisateurs
+  - name: Categories
+    description: Gestion des Catégories
+  - name: Banners
+    description: Gestion des Banner
+  - name: products
+    description: Gestion des Produits
+  - name: Orders
+    description: Gestion des Commandes
+  - name: Reservations
+    description: Gestion des Reservations
