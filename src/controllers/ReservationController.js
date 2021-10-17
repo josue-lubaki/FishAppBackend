@@ -161,16 +161,14 @@ module.exports = {
                         subject: 'Confirmation Reservation',
                         html: `Merci Beaucoup pour votre confiance en notre équipe.
                 <br>Votre Réservation fait un montant de <b>${totalPrice} USD</b>.<br>
-                Voici le lien vers le detail de la Réservation :
-                https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id} <br>
-                Dès que votre Réservation sera traitée, nous vous enverrons un autre mail.
+                Dirigez-vous vers :
+                https://josue-lubaki.github.io/psk/ ensuite sur compte pour voir l'état de votre réservation.
                 <br><br>
                 
                 Thank you very much for your trust in our team.
                 <br>Your reservation is worth <b>${totalPrice} USD</b>.<br>
-                Here is the link to the detail of the reservation:
-                https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}<br>
-                As soon as your reservation is processed, we will send you another email.
+                Head to:
+                https://josue-lubaki.github.io/psk/ then on account to see the status of your reservation.
                 <br>Thanks, have a good day`,
                     }
 
@@ -188,16 +186,14 @@ module.exports = {
                             body: `Merci Beaucoup pour votre confiance en notre équipe.
                             
 Votre Réservation fait un montant de ${totalPrice} USD
-Voici le lien vers le detail de la Réservation :
-https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}
-Dès que votre Réservation sera traitée, nous vous enverrons un autre mail.
+Dirigez-vous vers :
+https://josue-lubaki.github.io/psk/ ensuite sur compte pour voir l'état de votre réservation.
 
 
 Thank you very much for your trust in our team.
 Your reservation is worth ${totalPrice} USD
-Here is the link to the detail of the reservation:
-https://josue-lubaki.github.io/psk/compte/reservation/${reservation.id}
-As soon as your reservation is processed, we will send you another email.
+Head to:
+https://josue-lubaki.github.io/psk/ then on account to see the status of your reservation.
 Thanks, have a good day`,
                             messagingServiceSid:
                                 process.env.MESSAGING_TWILIO_SERVICE,
@@ -282,9 +278,9 @@ Thanks, have a good day`,
 
             if (!updatedReservation) {
                 return res.status(500).send('the reservation cannot be updated')
+            } else {
+                res.send(updatedReservation)
             }
-
-            res.send(updatedReservation)
         } catch (error) {
             throw Error(`Error while updateing reservation : ${error}`)
         }
@@ -312,9 +308,9 @@ Thanks, have a good day`,
 
         if (!reservation) {
             return res.status(400).send('the order cannot be update')
+        } else {
+            res.send(reservation)
         }
-
-        res.send(reservation)
     },
 
     /**
@@ -375,11 +371,11 @@ Thanks, have a good day`,
                     success: false,
                     message: 'Problème lors de la generation',
                 })
+            } else {
+                res.send({
+                    reservationCount: reservationCount,
+                })
             }
-
-            res.send({
-                reservationCount: reservationCount,
-            })
         } catch (error) {
             throw Error(`Error while getting count reservation : ${error}`)
         }
@@ -418,9 +414,9 @@ Thanks, have a good day`,
                 return res.status(200).json({
                     totalReserved: 0,
                 })
+            } else {
+                res.send({ totalReserved: totalReserved.pop().totalReserved })
             }
-
-            res.send({ totalReserved: totalReserved.pop().totalReserved })
         } catch (error) {
             throw new Error(
                 `Error while getting Total Reserved of Reservation : ${error}`
@@ -450,8 +446,9 @@ Thanks, have a good day`,
                 return res.status(500).json({
                     success: false,
                 })
+            } else {
+                res.send(userReservationList)
             }
-            res.send(userReservationList)
         } catch (error) {
             throw new Error(
                 `Error while try getting an reservation by Id : ${error}`

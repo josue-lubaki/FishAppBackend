@@ -81,7 +81,7 @@ router.get(`/exist/:id`, UserController.existUser)
  * @champs {email, phone}
  * @return { id:"value", question : "value" || message:"value" }
  */
-router.get(`/compte/forgot/get/question`, UserController.getQuestion)
+router.post(`/compte/forgot/get/question`, UserController.getQuestion)
 
 /**
  * Methode qui permet à l'utilisateur d'entrer sa réponse de sécurité

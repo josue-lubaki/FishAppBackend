@@ -41,8 +41,9 @@ module.exports = {
                     success: false,
                     message: 'The user with the given ID was not found',
                 })
+            } else {
+                res.status(200).send(user)
             }
-            res.status(200).send(user)
         } catch (error) {
             throw Error(
                 `Error while getting Information a User by ID : ${error}`
@@ -76,10 +77,11 @@ module.exports = {
                 return res.status(500).json({
                     success: false,
                 })
+            } else {
+                res.send({
+                    userCount: userCount,
+                })
             }
-            res.send({
-                userCount: userCount,
-            })
         } catch (error) {
             throw Error(`Error while Count All User : ${error}`)
         }
@@ -113,9 +115,9 @@ module.exports = {
 
             if (!user) {
                 return res.status(400).send('The user cannot be created !')
+            } else {
+                res.send(user)
             }
-
-            res.send(user)
         } catch (error) {
             throw Error(`Error while Creation User : ${error}`)
         }
@@ -268,8 +270,9 @@ module.exports = {
 
             if (!user) {
                 return res.status(400).send('The user cannot be update !')
+            } else {
+                res.send(user)
             }
-            res.send(user)
         } catch (error) {
             throw Error(`Error while Update Information User : ${error}`)
         }
@@ -278,6 +281,7 @@ module.exports = {
     /**
      * Suppression d'un Utilisateur via son ID
      * @param id identifiant de l'Utlisateur à supprimer
+     * @see http://localhost:3000/api/v1/users/[:id]
      */
     async deleteUserById(req, res) {
         try {
@@ -310,6 +314,7 @@ module.exports = {
      * Methode qui permet de vérifier si l'Utilisateur existe dans la collection grâce à son ID
      * @param {*} req
      * @param {*} res
+     * @see http://localhost:3000/api/v1/users/exist/[:id]
      * @returns boolean
      */
     async existUser(req, res) {
@@ -342,13 +347,18 @@ module.exports = {
             )
         }
     },
+    /**
+     * Methode qui permet de récuperer la question de sécurité de l'utilsateur
+     * @param {*} req
+     * @param {*} res
+     * @see http://localhost:3000/api/v1/users/compte/forgot/get/question
+     */
     async getQuestion(req, res) {
         // Demander à l'utilisateur son email, phone
         const user = await User.findOne({
             email: req.body.email,
             phone: req.body.phone,
         })
-        console.log('User Trouvé', user)
 
         // Récupérer sa question de securité
         if (user) {
@@ -369,6 +379,13 @@ module.exports = {
         }
     },
 
+    /**
+     * Methode qui permet de verifier si la réponse donnée par l'utilisateur correspond
+     * à celle de securité
+     * @param {*} req
+     * @param {*} res
+     * @see http://localhost:3000/api/v1/users/compte/forgot/get/response/:id
+     */
     async verifyResponse(req, res) {
         // Demander à l'utilisateur sa reponse
         const user = await User.findById(req.params.id).catch((err) =>
@@ -392,6 +409,11 @@ module.exports = {
         }
     },
 
+    /**
+     * Methode qui permet à l'utulisateur de modifier son mot de passe après l'oublie
+     * @param {*} req
+     * @param {*} res
+     */
     async resetPassword(req, res) {
         const user = await User.findByIdAndUpdate(req.params.id, {
             passwordHash: bcrypt.hashSync(req.body.password, 10),
@@ -399,7 +421,7 @@ module.exports = {
 
         if (user) {
             res.status(201).send({
-                message: `nouveau mot de passe '${req.body.password}'`,
+                message: `votre nouveau mot de passe est '${req.body.password}'`,
             })
         } else {
             res.status(200).send({

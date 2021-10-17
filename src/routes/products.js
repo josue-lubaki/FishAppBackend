@@ -3,13 +3,14 @@ const router = express.Router()
 const multer = require('multer')
 const ProductController = require('../controllers/ProductController')
 const uploadOptions = require('../../helpers/s3Upload')
+const asyncWrapper = require('../../helpers/middleware/asyncWrapper')
 
 /**
  * Récupération de tous les produits
  * @see http://localhost:3000/api/v1/products
  * @return {Product}
  */
-router.get(`/`, ProductController.getAllProducts)
+router.get(`/`, asyncWrapper(ProductController.getAllProducts))
 
 /**
  * Récupération d'un produit grâce à son ID
@@ -17,7 +18,7 @@ router.get(`/`, ProductController.getAllProducts)
  * @see http://localhost:3000/api/v1/products/:id
  * @return {Product}
  */
-router.get('/:id', ProductController.getProductById)
+router.get('/:id', asyncWrapper(ProductController.getProductById))
 
 /**
  * Création d'un produit dans la collection Product
@@ -26,7 +27,11 @@ router.get('/:id', ProductController.getProductById)
  * @see http://localhost:3000/api/v1/products
  * @return {Product}
  */
-router.post(`/`, uploadOptions.single('image'), ProductController.createProduct)
+router.post(
+    `/`,
+    uploadOptions.single('image'),
+    asyncWrapper(ProductController.createProduct)
+)
 
 /**
  * Mettre à jour un produit via son ID
@@ -38,7 +43,7 @@ router.post(`/`, uploadOptions.single('image'), ProductController.createProduct)
 router.put(
     '/:id',
     uploadOptions.single('image'),
-    ProductController.updateProductById
+    asyncWrapper(ProductController.updateProductById)
 )
 
 /**
@@ -47,7 +52,7 @@ router.put(
  * @param id identifiant du product à supprimer
  * @return {success: "value", message: "value"}
  */
-router.delete(`/:id`, ProductController.deleteProductById)
+router.delete(`/:id`, asyncWrapper(ProductController.deleteProductById))
 
 /**
  * Methode qui permet de calculer le nombre des Products dans la collections Products
@@ -55,14 +60,14 @@ router.delete(`/:id`, ProductController.deleteProductById)
  * @see http://localhost:3000/api/v1/products/get/count
  * @return {productCount: "value"}
  */
-router.get('/get/count', ProductController.getCountAllProduct)
+router.get('/get/count', asyncWrapper(ProductController.getCountAllProduct))
 
 /**
  * methode qui permet de calculer le nombre des Products dans la collections Product via son ID
  * @see http://localhost:3000/api/v1/products/get/count/:id
  * @return {success : "value", countInStock : "value"}
  */
-router.get('/get/count/:id', ProductController.getCountProduct)
+router.get('/get/count/:id', asyncWrapper(ProductController.getCountProduct))
 
 /**
  * Récuperer tous les produits ayant le champ "Featured" à true
@@ -73,7 +78,10 @@ router.get('/get/count/:id', ProductController.getCountProduct)
  * Récupérer un nombre fixe des produits featured, le nombre passé en paramètre
  * @see +count : caster le type de la variable en Number (Raison du +)
  */
-router.get('/get/featured/:count', ProductController.getAllFeaturedProduct)
+router.get(
+    '/get/featured/:count',
+    asyncWrapper(ProductController.getAllFeaturedProduct)
+)
 
 /**
  * Mettre à jour le tableau d'image pour un produit
@@ -85,7 +93,7 @@ router.get('/get/featured/:count', ProductController.getAllFeaturedProduct)
 router.put(
     '/gallery-images/:id',
     uploadOptions.array('images', 3),
-    ProductController.updateImagesProductById
+    asyncWrapper(ProductController.updateImagesProductById)
 )
 
 module.exports = router

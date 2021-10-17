@@ -7,7 +7,7 @@ const ControllerUser = require('./UserController')
 require('dotenv').config()
 const paypal = require('paypal-rest-sdk')
 const accountSid = process.env.ACCOUNTSIDTWILIO
-const authToken = process.env.AUTHTOKENTWILIO   
+const authToken = process.env.AUTHTOKENTWILIO
 const client = require('twilio')(accountSid, authToken)
 
 module.exports = {
@@ -26,8 +26,9 @@ module.exports = {
             return res.status(500).json({
                 success: false,
             })
+        } else {
+            return res.send(orderList)
         }
-        return res.send(orderList)
     },
 
     /**
@@ -47,8 +48,9 @@ module.exports = {
             return res.status(500).json({
                 success: false,
             })
+        } else {
+            return res.send(order)
         }
-        return res.send(order)
     },
 
     /**
@@ -118,27 +120,20 @@ module.exports = {
 
         await ControllerUser.getUserByIdMethode(req.body.user).then(
             async (result) => {
-                let host = req.hostname
-                if (req.hostname === 'localhost') {
-                    host = 'localhost:4200'
-                }
-
                 const options = {
                     from: process.env.userEmail,
                     to: `${result.email}`,
                     subject: 'Confirmation Commande',
                     html: `Merci Beaucoup pour votre confiance en notre équipe.
                 <br>Votre commande fait un montant de <b>${totalPrice} USD</b>.<br>
-                Voici le lien vers le detail de la commande :
-                ${req.protocol}://${host}/compte/orders/${order.id}<br>
-                Dès que votre commande sera traitée, nous vous enverrons un autre mail.
-                <br><br>
+                Dirigez-vous vers :
+                https://josue-lubaki.github.io/psk/ ensuite sur compte pour voir l'état de votre commande.
+                <br><br><br>
                 
                 Thank you very much for your trust in our team.
                 <br>Your order is worth <b>${totalPrice} USD</b>.<br>
-                Here is the link to the detail of the order:
-                ${req.protocol}://${host}/compte/orders/${order.id}<br>
-                As soon as your order is processed, we will send you another email.
+                Head to:
+                 https://josue-lubaki.github.io/psk/ then on account to see the status of your order.
                 <br>Thanks, have a good day`,
                 }
 
@@ -156,15 +151,14 @@ module.exports = {
                         body: `Merci Beaucoup pour votre confiance en notre équipe.
 
 Votre commande fait un montant de ${totalPrice} USD
-Voici le lien vers le detail de la commande :
-${req.protocol}://${host}/compte/orders/${order.id}
-Dès que votre commande sera traitée, nous vous enverrons un autre mail.
+Dirigez-vous vers :
+https://josue-lubaki.github.io/psk/ ensuite sur compte pour voir l'état de votre commande.
+
 
 Thank you very much for your trust in our team.
 Your order is worth ${totalPrice} USD
-Here is the link to the detail of the order:
-${req.protocol}://${host}/compte/orders/${order.id}
-As soon as your order is processed, we will send you another email.
+Head to:
+https://josue-lubaki.github.io/psk/ then on account to see the status of your order.
 Thanks, have a good day`,
                         messagingServiceSid:
                             process.env.MESSAGING_TWILIO_SERVICE,
