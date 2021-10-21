@@ -433,7 +433,7 @@ module.exports = {
             client.messages
                 .create({
                     body: `
-                    - ${WEBSITE} - 
+                    - poisson-kin.com - 
 Merci Beaucoup pour votre confiance en notre équipe.
 Nous vous avisons que votre mot de passe vient d'être modifier, si vous êtes l'auteur de cette modification ignore ce message.
 
