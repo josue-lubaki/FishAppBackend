@@ -2,6 +2,9 @@ const { User } = require('../models/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const accountSid = process.env.ACCOUNTSIDTWILIO
+const authToken = process.env.AUTHTOKENTWILIO
+const client = require('twilio')(accountSid, authToken)
 
 module.exports = {
     /**
@@ -418,10 +421,30 @@ module.exports = {
             passwordHash: bcrypt.hashSync(req.body.password, 10),
         })
 
+        const infoUser = await User.findById(req.params.id)
+            .select(['-passwordHash', '-isAdmin'])
+            .catch((err) => console.log(err))
+
         if (user) {
             res.status(201).send({
                 message: `votre nouveau mot de passe est '${req.body.password}'`,
             })
+
+            client.messages
+                .create({
+                    body: `
+                    - ${SITE_WEB} - 
+Merci Beaucoup pour votre confiance en notre équipe.
+Nous vous avisons que votre mot de passe vient d'être modifier, si vous êtes l'auteur de cette modification ignore ce message.
+
+Thank you very much for your trust in our team.
+We advise you that your password has just been changed, if you are the author of this change ignore this message.
+Thanks, have a good day`,
+                    messagingServiceSid: process.env.MESSAGING_TWILIO_SERVICE,
+                    to: infoUser.phone,
+                })
+                .then((message) => console.log(message.sid))
+                .done()
         } else {
             res.status(200).send({
                 message: 'Sorry, User no found',
