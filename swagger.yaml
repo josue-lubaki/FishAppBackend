@@ -5,7 +5,7 @@ info:
     name: Josue Lubaki
     url: josue-lubaki.ca
     email: josuelubaki@gmail.com
-  version: '1.0'
+  version: '1.0.0'
 servers:
 - url: https://fish-sales-application.herokuapp.com/api/v1
   variables: {}
