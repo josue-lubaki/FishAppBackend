@@ -169,7 +169,6 @@ paths:
               $ref: '#/components/schemas/getSecureQuestionRequest'
             example:
               email: veteran@gmail.com
-              phone: 18736641270
         required: true
       responses:
         '200':
@@ -1278,7 +1277,6 @@ components:
       title: getSecureQuestionRequest
       required:
         - email
-        - phone
       type: object
       properties:
         email:
@@ -1287,7 +1285,6 @@ components:
           type: string
       example:
         email: veteran@gmail.com
-        phone: 18736641270
     verifySecureResponseRequest:
       title: verifySecureResponseRequest
       required:
