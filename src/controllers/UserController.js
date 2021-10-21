@@ -357,7 +357,6 @@ module.exports = {
         // Demander à l'utilisateur son email, phone
         const user = await User.findOne({
             email: req.body.email,
-            phone: req.body.phone,
         })
 
         // Récupérer sa question de securité

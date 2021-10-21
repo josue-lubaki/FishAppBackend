@@ -58,9 +58,9 @@ function authJwt() {
                     url: /\/api\/v1\/orders(.*)/,
                     methods: ['POST', 'OPTIONS'],
                 },
-                // {
-                //     url: /\/api\/v1\/users\/compte\/forgot\/(.*)/,
-                // },
+                {
+                    url: /\/api\/v1\/users\/compte\/forgot\/(.*)/,
+                },
                 {
                     url: /\/api\/v1\/users\/exist\/(.*)/,
                 },
