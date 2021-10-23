@@ -70,6 +70,7 @@ app.get('/', (req, res) => {
         background-color: rgba(45, 142, 172, 0.13);
         padding: 2rem 0;
         text-align: center;
+        width: 75%;
       }
 
       img {
