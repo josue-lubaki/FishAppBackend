@@ -3,7 +3,7 @@ info:
   title: FishApp API
   contact:
     name: Josue Lubaki
-    url: josue-lubaki.ca
+    url: https://josue-lubaki.ca
     email: josuelubaki@gmail.com
   version: '1.0.0'
 servers:
