@@ -46,9 +46,9 @@ function authJwt() {
                 `${api}/users/login`,
                 `${api}/users/register`,
                 `/`,
-                `/api-docs`,
+                `/docs`,
                 {
-                    url: /\/api-docs\/(.*)/,
+                    url: /\/docs\/(.*)/,
                 },
                 {
                     url: /\/api\/v1\/orders(.*)/,
