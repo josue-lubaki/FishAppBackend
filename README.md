@@ -3,3 +3,25 @@
 - Accèder à <a href="https://fish-sales-application.herokuapp.com/docs">API</a><br>
 - Partie <a href="https://github.com/josue-lubaki/FishAppFrontend">Frontend</a> du site <br>
 - Application mobile Android sur <a href="https://play.google.com/store/apps/details?id=ca.josue.fishapp">PlayStore</a>
+
+<!-- ## Dépendancies:
+- dotenv
+- prettier
+- express
+- mongoose
+- bcrypt
+- jsonwebtoken
+- cors
+- morgan
+- express-jwt
+- nodemon
+- multer
+
+## Commandes :
+> npx create-nx-workspace --present=angular
+> nx generate @nrwl/angular:app admin
+> nx generate component home-page --project=ngshop --dry-run
+> npx nx g @nwrl/workspace:lib ui
+> npm install @angular/cdk --save
+> nx build ng-shop
+> nx build ng-shop --output-path docs --base-href /repo_name/ -->
