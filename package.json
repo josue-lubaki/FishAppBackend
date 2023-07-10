@@ -48,7 +48,7 @@
     "sinon": "^11.1.1",
     "stripe": "^12.1.1",
     "supertest": "^6.1.6",
-    "swagger-ui-express": "^4.1.6",
+    "swagger-ui-express": "^5.0.0",
     "twilio": "^3.69.0",
     "xoauth2": "^1.2.0",
     "xss-clean": "^0.1.1",
